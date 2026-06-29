@@ -542,7 +542,7 @@ function finalizarCompra() {
       window.ttq.track('InitiateCheckout', { contents, value, currency: 'BRL' });
     } catch (e) {}
   }
-  window.location.href = 'cart.php';
+  window.location.href = 'cart.php/';
 }
 
 // ----- normalização e render -----
@@ -738,10 +738,11 @@ function carregarProdutos() {
     const normalized = arr.map(normalizarProduto);
     const seen = new Set();
     produtosData = normalized.filter(p => { const k = String(p?.titulo || '').trim().toLowerCase(); if (!k || seen.has(k)) return false; seen.add(k); return true; });
+    window.produtosData = produtosData;
     ordenarProdutos();
     renderProdutos();
     renderHomeSections();
-  }).catch(e => { console.error(e); produtosData = []; renderProdutos(); renderHomeSections(); });
+  }).catch(e => { console.error(e); produtosData = []; window.produtosData = produtosData; renderProdutos(); renderHomeSections(); });
 }
 
 // ----- loja.json -----
@@ -986,4 +987,5 @@ window.abrirCarrinho = abrirCarrinho;
 window.fecharCarrinho = fecharCarrinho;
 window.fecharModal = fecharModal;
 window.comprarAgora = comprarAgora;
+window.abrirModalProduto = abrirModalProduto;
 window.finalizarCompra = finalizarCompra;

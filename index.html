@@ -14,6 +14,32 @@
     ['gesturestart','gesturechange','gestureend'].forEach(ev => {
       document.addEventListener(ev, (e) => e.preventDefault(), { passive: false });
     });
+
+    // Roteamento client-side: produto.php -> abre modal | cart.php -> cart.php/
+    document.addEventListener('click', function (ev) {
+      const a = ev.target && ev.target.closest && ev.target.closest('a[href*="produto.php"], a[href*="cart.php"], a[href*="checkout.php"]');
+      if (!a) return;
+      const href = a.getAttribute('href') || '';
+      if (href.includes('produto.php')) {
+        ev.preventDefault();
+        const m = href.match(/produto_id=([^&]+)/);
+        const id = m ? decodeURIComponent(m[1]) : null;
+        let tries = 0;
+        const tryOpen = () => {
+          const list = window.produtosData || (typeof produtosData !== 'undefined' ? produtosData : null);
+          const prod = Array.isArray(list) ? list.find(p => String(p.id) === String(id)) : null;
+          if (prod && typeof window.abrirModalProduto === 'function') { window.abrirModalProduto(prod); return; }
+          if (++tries < 30) setTimeout(tryOpen, 150);
+        };
+        tryOpen();
+      } else if (href === 'cart.php' || href.startsWith('cart.php?')) {
+        ev.preventDefault();
+        window.location.href = href.replace(/^cart\.php/, 'cart.php/');
+      } else if (href === 'checkout.php' || href.startsWith('checkout.php?')) {
+        ev.preventDefault();
+        window.location.href = href.replace(/^checkout\.php/, 'checkout.php/');
+      }
+    }, true);
   </script>
   <link rel="stylesheet" href="styles.css">
 
@@ -247,6 +273,6 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=2"></script>
 </body>
 </html>

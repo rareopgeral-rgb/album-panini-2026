@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Carrinho de Compras - Album 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- TikTok Pixel -->
+  <!-- TikTok Pixel (dinâmico — Pixel ID lido de checkout/tiktok-config.json) -->
+  <script src="checkout/tiktok-pixel.js.php" async></script>
+
+  <style>
+    body { background: #fff; }
+    .cart-item { display: grid; grid-template-columns: 80px 1fr auto; gap: 12px; padding: 12px 14px; border-bottom: 1px solid #f3f4f6; align-items: start; }
+    .cart-item:last-child { border-bottom: none; }
+    .cart-thumb { width: 80px; height: 80px; border-radius: 8px; background: #f9fafb; object-fit: contain; border: 1px solid #f3f4f6; }
+    .qty-btn { width: 28px; height: 28px; border: 1px solid #d1d5db; background: #fff; border-radius: 6px; font-weight: 700; }
+    .qty-input { width: 36px; text-align: center; border: none; outline: none; font-weight: 600; }
+    /* Onda 93.120.1 — orderbump estilo vazosdebarro: 1 card grande horizontal */
+    .rel-big { display: block; border: 1.5px solid #f3f4f6; border-radius: 12px; padding: 10px; background: #fff; }
+    .rel-big-img { width: 100%; height: 200px; object-fit: contain; background: #fafafa; border-radius: 8px; margin-bottom: 10px; }
+    .rel-big-title { font-size: 14px; font-weight: 600; line-height: 1.3; margin-bottom: 6px; color: #111827; }
+    .rel-big-meta { font-size: 11px; color: #6b7280; margin-bottom: 4px; }
+    .rel-big-price { color: #e11d48; font-size: 18px; font-weight: 800; }
+    .rel-big-old { font-size: 12px; color: #9ca3af; text-decoration: line-through; }
+    .rel-big-chips { display: flex; gap: 4px; flex-wrap: wrap; margin: 4px 0 8px; }
+  </style>
+  <!-- Onda 93.60: Hydra tracker (visitor real-time no globo) -->
+  <script src="checkout/hydra-tracker.js%3Fv=93.60" async></script>
+</head>
+<body class="text-gray-800">
+
+  <!-- HEADER -->
+  <header class="bg-white border-b border-gray-100 sticky top-0 z-30">
+    <div class="max-w-2xl mx-auto px-4 py-3 grid grid-cols-3 items-center">
+      <div><a href="index.html" class="text-gray-700 inline-block p-1"><i class="fas fa-arrow-left"></i></a></div>
+      <div class="text-center">
+        <h1 class="text-base font-semibold">Carrinho</h1>
+      </div>
+      <div class="text-right">
+        <button onclick="esvaziar()" class="text-gray-500 hover:text-rose-600 p-1" title="Esvaziar"><i class="fas fa-trash"></i></button>
+        <button class="text-gray-700 inline-block p-1 ml-1 relative">
+          <i class="fas fa-shopping-cart"></i>
+          <span id="badge" class="absolute -top-1 -right-1 bg-rose-600 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-2xl mx-auto pb-28">
+
+    <!-- ITEMS LIST -->
+    <section class="border border-gray-100 rounded-lg mx-4 mt-4 mb-4 bg-white" id="cartItemsWrap">
+      <div id="cartItems"></div>
+      <div id="cartVazio" class="hidden text-center py-10">
+        <i class="fas fa-shopping-cart text-4xl text-gray-300 mb-3"></i>
+        <p class="text-gray-500 mb-4">Seu carrinho está vazio</p>
+        <a href="index.html" class="bg-rose-600 hover:bg-rose-700 text-white font-semibold px-6 py-3 rounded-lg text-sm">Voltar à loja</a>
+      </div>
+    </section>
+
+    <!-- PROTECAO -->
+    <section class="border border-amber-200 bg-amber-50 rounded-lg mx-4 mb-4 p-3">
+      <div class="flex items-center gap-2 text-amber-800 font-semibold text-sm mb-2">
+        <i class="fas fa-shield-halved"></i> Proteção do cliente
+      </div>
+      <div class="grid grid-cols-2 gap-1 text-[12px] text-amber-900">
+        <div><i class="fas fa-check text-amber-700 mr-1"></i> Devolução gratuita</div>
+        <div><i class="fas fa-check text-amber-700 mr-1"></i> Reembolso automático por danos</div>
+        <div><i class="fas fa-check text-amber-700 mr-1"></i> Pagamento seguro</div>
+        <div><i class="fas fa-check text-amber-700 mr-1"></i> Cupom por atraso na coleta</div>
+      </div>
+    </section>
+
+    <!-- VOCE TAMBEM PODE GOSTAR (Onda 93.120.1 — card grande estilo vazosdebarro) -->
+    <section class="mx-4 mb-4">
+      <h2 class="text-sm font-semibold mb-3">Você também pode gostar</h2>
+      <div id="recomendados"></div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER FIXO -->
+  <footer class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-30">
+    <div class="max-w-2xl mx-auto px-4 py-3">
+      <div class="flex items-center justify-between text-sm mb-2">
+        <span class="text-gray-600">Total (itens):</span>
+        <span class="font-bold text-base" id="cartTotal">R$ 0,00</span>
+      </div>
+      <a href="checkout.php.html" class="block text-center bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 rounded-lg text-sm uppercase shadow-lg">
+        Finalizar Compra
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    const PRODUTOS = [{"id":14995,"titulo":"Álbum 2026","preco":"31.43","preco_comparacao":"74.90","desconto":"60.00","notas":"5","quantidade_produtos":4312,"order_bump_ativo":1,"order_bump_produto_id":15005,"descricao":"As emoções do maior espetáculo esportivo do mundo eternizadas no maior álbum de figurinhas de todos os tempos! Uma coleção completa, com todas as seleções classificadas, cromos especiais e todos os detalhes para você acompanhar de pertinho a disputa pela taça da Album 2026!","slug":"panini-copa-2026-3","imagem":"\/uploads\/produto_6a0a4470b32140.61596727.png","fotos":["\/uploads\/produto_6a0a4470b32140.61596727.png","\/uploads\/produto_6a0a3911ba7992.77301792.png","\/uploads\/produto_6a0a3911ba7309.23392868.png","\/uploads\/produto_6a0a3911ba7773.60453059.png","\/uploads\/produto_6a0a3911ba7b76.72129712.png"],"variacoes":[{"id":61928,"titulo":"Dourado Capa Dura","tipo":"cor","preco":"25.31","preco_comparacao":"74.90","imagem":"\/uploads\/produto_6a0a3911ba7992.77301792.png","info":"Atributo: Dourado"},{"id":61929,"titulo":"Prata Capa Dura","tipo":"cor","preco":"24.08","preco_comparacao":"74.90","imagem":"\/uploads\/produto_6a0a3911ba7b76.72129712.png","info":"Atributo: Cor"},{"id":61930,"titulo":"Tradicional Capa Mole","tipo":"cor","preco":"14.29","preco_comparacao":"24.90","imagem":"\/uploads\/produto_6a0a3911ba7773.60453059.png","info":"Atributo: Cor"},{"id":61931,"titulo":"Tradicional Capa Dura","tipo":"cor","preco":"20.77","preco_comparacao":"74.90","imagem":"\/uploads\/produto_6a0a3911ba7309.23392868.png","info":"Atributo: Cor"},{"id":61932,"titulo":"Kit Com 100 Envelopes","tipo":"tamanho","preco":"21.05","preco_comparacao":"174.90","imagem":"\/uploads\/produto_6a0a79422b6370.79142815.png","info":"Atributo: Envelopes"},{"id":61933,"titulo":"Kit Com 200 Envelopes","tipo":"tamanho","preco":"29.93","preco_comparacao":"174.90","imagem":"\/uploads\/produto_6a0a79818989a9.20966817.png","info":"Atributo: Envelopes"},{"id":61934,"titulo":"Kit Com 400 Envelopes","tipo":"tamanho","preco":"43.08","preco_comparacao":"274.90","imagem":"\/uploads\/produto_6a0a7a653d7718.09584720.png","info":"Atributo: Envelopes"},{"id":61935,"titulo":"Kit Com 650 Envelopes","tipo":"tamanho","preco":"62.06","preco_comparacao":"490.90","imagem":"\/uploads\/produto_6a0a7aa6590583.31674776.png","info":"Atributo: Envelopes"},{"id":61995,"titulo":"Álbum 2026","tipo":"cor","preco":"31.43","preco_comparacao":"61.08","imagem":"\/uploads\/produto_6a0a4470b32140.61596727.png","info":"Atributo: Dourado"}],"videos":["\/uploads\/videos\/video_carla.mp4","\/uploads\/videos\/video_nandy.mp4","\/uploads\/videos\/video_californices.mp4","\/uploads\/videos\/video_jose.mp4","\/uploads\/videos\/video_andre.mp4","\/uploads\/videos\/video_joyce.mp4","\/uploads\/videos\/video_mateus.mp4","\/uploads\/videos\/video_juan.mp4","\/uploads\/videos\/video_juliaerafael.mp4"]},{"id":14996,"titulo":"Álbum Tradicional Capa Dura","preco":"20.77","preco_comparacao":"74.90","desconto":"60.00","notas":"5","quantidade_produtos":4312,"order_bump_ativo":1,"order_bump_produto_id":15005,"descricao":"Álbum oficial Tradicional Capa Dura.","slug":"panini-copa-2026-3","imagem":"\/uploads\/produto_6a0a3911ba7309.23392868.png","fotos":["\/uploads\/produto_6a0a3911ba7309.23392868.png","\/uploads\/produto_6a0a3911ba7992.77301792.png","\/uploads\/produto_6a0a3911ba7b76.72129712.png","\/uploads\/produto_6a0a3911ba7773.60453059.png","\/uploads\/produto_6a0a4470b32140.61596727.png"],"variacoes":[{"id":71001,"titulo":"Tradicional Capa Dura","tipo":"cor","preco":"20.77","preco_comparacao":"74.90","imagem":"\/uploads\/produto_6a0a3911ba7309.23392868.png","info":"Atributo: Cor"},{"id":71002,"titulo":"Kit Com 100 Envelopes","tipo":"tamanho","preco":"21.05","preco_comparacao":"174.90","imagem":"\/uploads\/produto_6a0a79422b6370.79142815.png","info":"Atributo: Envelopes"},{"id":71003,"titulo":"Kit Com 200 Envelopes","tipo":"tamanho","preco":"29.93","preco_comparacao":"174.90","imagem":"\/uploads\/produto_6a0a79818989a9.20966817.png","info":"Atributo: Envelopes"},{"id":71004,"titulo":"Kit Com 400 Envelopes","tipo":"tamanho","preco":"43.08","preco_comparacao":"274.90","imagem":"\/uploads\/produto_6a0a7a653d7718.09584720.png","info":"Atributo: Envelopes"},{"id":71005,"titulo":"Kit Com 650 Envelopes","tipo":"tamanho","preco":"62.06","preco_comparacao":"490.90","imagem":"\/uploads\/produto_6a0a7aa6590583.31674776.png","info":"Atributo: Envelopes"}],"videos":["\/uploads\/videos\/video_carla.mp4","\/uploads\/videos\/video_nandy.mp4","\/uploads\/videos\/video_californices.mp4","\/uploads\/videos\/video_jose.mp4","\/uploads\/videos\/video_andre.mp4","\/uploads\/videos\/video_joyce.mp4","\/uploads\/videos\/video_mateus.mp4","\/uploads\/videos\/video_juan.mp4","\/uploads\/videos\/video_juliaerafael.mp4"]},{"id":14999,"titulo":"Álbum Tradicional Capa Mole","preco":"14.29","preco_comparacao":"74.90","desconto":"60.00","notas":"5","quantidade_produtos":4312,"order_bump_ativo":1,"order_bump_produto_id":15005,"descricao":"Álbum oficial Tradicional Capa Mole.","slug":"panini-copa-2026-3","imagem":"\/uploads\/produto_6a0a3911ba7773.60453059.png","fotos":["\/uploads\/produto_6a0a3911ba7773.60453059.png","\/uploads\/produto_6a0a3911ba7992.77301792.png","\/uploads\/produto_6a0a3911ba7309.23392868.png","\/uploads\/produto_6a0a3911ba7b76.72129712.png","\/uploads\/produto_6a0a4470b32140.61596727.png"],"variacoes":[{"id":72001,"titulo":"Tradicional Capa Mole","tipo":"cor","preco":"14.29","preco_comparacao":"24.90","imagem":"\/uploads\/produto_6a0a3911ba7773.60453059.png","info":"Atributo: Cor"},{"id":72002,"titulo":"Kit Com 100 Envelopes","tipo":"tamanho","preco":"21.05","preco_comparacao":"174.90","imagem":"\/uploads\/produto_6a0a79422b6370.79142815.png","info":"Atributo: Envelopes"},{"id":72003,"titulo":"Kit Com 200 Envelopes","tipo":"tamanho","preco":"29.93","preco_comparacao":"174.90","imagem":"\/uploads\/produto_6a0a79818989a9.20966817.png","info":"Atributo: Envelopes"},{"id":72004,"titulo":"Kit Com 400 Envelopes","tipo":"tamanho","preco":"43.08","preco_comparacao":"274.90","imagem":"\/uploads\/produto_6a0a7a653d7718.09584720.png","info":"Atributo: Envelopes"},{"id":72005,"titulo":"Kit Com 650 Envelopes","tipo":"tamanho","preco":"62.06","preco_comparacao":"490.90","imagem":"\/uploads\/produto_6a0a7aa6590583.31674776.png","info":"Atributo: Envelopes"}],"videos":["\/uploads\/videos\/video_carla.mp4","\/uploads\/videos\/video_nandy.mp4","\/uploads\/videos\/video_californices.mp4","\/uploads\/videos\/video_jose.mp4","\/uploads\/videos\/video_andre.mp4","\/uploads\/videos\/video_joyce.mp4","\/uploads\/videos\/video_mateus.mp4","\/uploads\/videos\/video_juan.mp4","\/uploads\/videos\/video_juliaerafael.mp4"]},{"id":15000,"titulo":"Álbum Prata Capa Dura","preco":"24.08","preco_comparacao":"74.90","desconto":"60.00","notas":"5","quantidade_produtos":4312,"order_bump_ativo":1,"order_bump_produto_id":15005,"descricao":"Álbum oficial Prata Capa Dura.","slug":"panini-copa-2026-3","imagem":"\/uploads\/produto_6a0a3911ba7b76.72129712.png","fotos":["\/uploads\/produto_6a0a3911ba7b76.72129712.png","\/uploads\/produto_6a0a3911ba7992.77301792.png","\/uploads\/produto_6a0a3911ba7309.23392868.png","\/uploads\/produto_6a0a3911ba7773.60453059.png","\/uploads\/produto_6a0a4470b32140.61596727.png"],"variacoes":[{"id":73001,"titulo":"Prata Capa Dura","tipo":"cor","preco":"24.08","preco_comparacao":"74.90","imagem":"\/uploads\/produto_6a0a3911ba7b76.72129712.png","info":"Atributo: Cor"},{"id":73002,"titulo":"Kit Com 100 Envelopes","tipo":"tamanho","preco":"21.05","preco_comparacao":"174.90","imagem":"\/uploads\/produto_6a0a79422b6370.79142815.png","info":"Atributo: Envelopes"},{"id":73003,"titulo":"Kit Com 200 Envelopes","tipo":"tamanho","preco":"29.93","preco_comparacao":"174.90","imagem":"\/uploads\/produto_6a0a79818989a9.20966817.png","info":"Atributo: Envelopes"},{"id":73004,"titulo":"Kit Com 400 Envelopes","tipo":"tamanho","preco":"43.08","preco_comparacao":"274.90","imagem":"\/uploads\/produto_6a0a7a653d7718.09584720.png","info":"Atributo: Envelopes"},{"id":73005,"titulo":"Kit Com 650 Envelopes","tipo":"tamanho","preco":"62.06","preco_comparacao":"490.90","imagem":"\/uploads\/produto_6a0a7aa6590583.31674776.png","info":"Atributo: Envelopes"}],"videos":["\/uploads\/videos\/video_carla.mp4","\/uploads\/videos\/video_nandy.mp4","\/uploads\/videos\/video_californices.mp4","\/uploads\/videos\/video_jose.mp4","\/uploads\/videos\/video_andre.mp4","\/uploads\/videos\/video_joyce.mp4","\/uploads\/videos\/video_mateus.mp4","\/uploads\/videos\/video_juan.mp4","\/uploads\/videos\/video_juliaerafael.mp4"]},{"id":15001,"titulo":"Álbum Dourado Capa Dura","preco":"25.31","preco_comparacao":"74.90","desconto":"60.00","notas":"5","quantidade_produtos":4312,"order_bump_ativo":1,"order_bump_produto_id":15005,"descricao":"Álbum oficial Dourado Capa Dura.","slug":"panini-copa-2026-3","imagem":"\/uploads\/produto_6a0a3911ba7992.77301792.png","fotos":["\/uploads\/produto_6a0a3911ba7992.77301792.png","\/uploads\/produto_6a0a3911ba7309.23392868.png","\/uploads\/produto_6a0a3911ba7b76.72129712.png","\/uploads\/produto_6a0a3911ba7773.60453059.png","\/uploads\/produto_6a0a4470b32140.61596727.png"],"variacoes":[{"id":74001,"titulo":"Dourado Capa Dura","tipo":"cor","preco":"25.31","preco_comparacao":"74.90","imagem":"\/uploads\/produto_6a0a3911ba7992.77301792.png","info":"Atributo: Dourado"},{"id":74002,"titulo":"Kit Com 100 Envelopes","tipo":"tamanho","preco":"21.05","preco_comparacao":"174.90","imagem":"\/uploads\/produto_6a0a79422b6370.79142815.png","info":"Atributo: Envelopes"},{"id":74003,"titulo":"Kit Com 200 Envelopes","tipo":"tamanho","preco":"29.93","preco_comparacao":"174.90","imagem":"\/uploads\/produto_6a0a79818989a9.20966817.png","info":"Atributo: Envelopes"},{"id":74004,"titulo":"Kit Com 400 Envelopes","tipo":"tamanho","preco":"43.08","preco_comparacao":"274.90","imagem":"\/uploads\/produto_6a0a7a653d7718.09584720.png","info":"Atributo: Envelopes"},{"id":74005,"titulo":"Kit Com 650 Envelopes","tipo":"tamanho","preco":"62.06","preco_comparacao":"490.90","imagem":"\/uploads\/produto_6a0a7aa6590583.31674776.png","info":"Atributo: Envelopes"}],"videos":["\/uploads\/videos\/video_carla.mp4","\/uploads\/videos\/video_nandy.mp4","\/uploads\/videos\/video_californices.mp4","\/uploads\/videos\/video_jose.mp4","\/uploads\/videos\/video_andre.mp4","\/uploads\/videos\/video_joyce.mp4","\/uploads\/videos\/video_mateus.mp4","\/uploads\/videos\/video_juan.mp4","\/uploads\/videos\/video_juliaerafael.mp4"]},{"id":15002,"titulo":"Kit Com 100 Envelopes","preco":"21.05","preco_comparacao":"74.90","desconto":"60.00","notas":"5","quantidade_produtos":4312,"descricao":"Kit com 100 envelopes oficiais (500 figurinhas).","slug":"panini-copa-2026-3","imagem":"\/uploads\/produto_6a0a79422b6370.79142815.png","fotos":["\/uploads\/produto_6a0a79422b6370.79142815.png","\/uploads\/produto_6a0a3911ba7309.23392868.png","\/uploads\/produto_6a0a3911ba7b76.72129712.png","\/uploads\/produto_6a0a3911ba7773.60453059.png","\/uploads\/produto_6a0a4470b32140.61596727.png","\/uploads\/produto_6a0a3911ba7992.77301792.png"],"variacoes":[{"id":75001,"titulo":"Kit Com 100 Envelopes","tipo":"tamanho","preco":"21.05","preco_comparacao":"174.90","imagem":"\/uploads\/produto_6a0a79422b6370.79142815.png","info":"Atributo: Envelopes"}],"videos":["\/uploads\/videos\/video_carla.mp4","\/uploads\/videos\/video_nandy.mp4","\/uploads\/videos\/video_californices.mp4","\/uploads\/videos\/video_jose.mp4","\/uploads\/videos\/video_andre.mp4","\/uploads\/videos\/video_joyce.mp4","\/uploads\/videos\/video_mateus.mp4","\/uploads\/videos\/video_juan.mp4","\/uploads\/videos\/video_juliaerafael.mp4"]},{"id":15003,"titulo":"Kit Com 200 Envelopes","preco":"29.93","preco_comparacao":"194.90","desconto":"60.00","notas":"5","quantidade_produtos":4312,"descricao":"Kit com 200 envelopes oficiais (1000 figurinhas).","slug":"panini-copa-2026-3","imagem":"\/uploads\/produto_6a0a79818989a9.20966817.png","fotos":["\/uploads\/produto_6a0a79818989a9.20966817.png","\/uploads\/produto_6a0a3911ba7309.23392868.png","\/uploads\/produto_6a0a3911ba7b76.72129712.png","\/uploads\/produto_6a0a3911ba7773.60453059.png","\/uploads\/produto_6a0a4470b32140.61596727.png","\/uploads\/produto_6a0a3911ba7992.77301792.png","\/uploads\/produto_6a0a79422b6370.79142815.png"],"variacoes":[{"id":76001,"titulo":"Kit Com 200 Envelopes","tipo":"tamanho","preco":"29.93","preco_comparacao":"174.90","imagem":"\/uploads\/produto_6a0a79818989a9.20966817.png","info":"Atributo: Envelopes"}],"videos":["\/uploads\/videos\/video_carla.mp4","\/uploads\/videos\/video_nandy.mp4","\/uploads\/videos\/video_californices.mp4","\/uploads\/videos\/video_jose.mp4","\/uploads\/videos\/video_andre.mp4","\/uploads\/videos\/video_joyce.mp4","\/uploads\/videos\/video_mateus.mp4","\/uploads\/videos\/video_juan.mp4","\/uploads\/videos\/video_juliaerafael.mp4"]},{"id":15004,"titulo":"Kit Com 400 Envelopes","preco":"43.08","preco_comparacao":"394.90","desconto":"60.00","notas":"5","quantidade_produtos":4312,"descricao":"Kit com 400 envelopes oficiais (2000 figurinhas).","slug":"panini-copa-2026-3","imagem":"\/uploads\/produto_6a0a7a653d7718.09584720.png","fotos":["\/uploads\/produto_6a0a7a653d7718.09584720.png","\/uploads\/produto_6a0a3911ba7309.23392868.png","\/uploads\/produto_6a0a3911ba7b76.72129712.png","\/uploads\/produto_6a0a3911ba7773.60453059.png","\/uploads\/produto_6a0a4470b32140.61596727.png","\/uploads\/produto_6a0a3911ba7992.77301792.png","\/uploads\/produto_6a0a79422b6370.79142815.png","\/uploads\/produto_6a0a79818989a9.20966817.png"],"variacoes":[{"id":77001,"titulo":"Kit Com 400 Envelopes","tipo":"tamanho","preco":"43.08","preco_comparacao":"274.90","imagem":"\/uploads\/produto_6a0a7a653d7718.09584720.png","info":"Atributo: Envelopes"}],"videos":["\/uploads\/videos\/video_carla.mp4","\/uploads\/videos\/video_nandy.mp4","\/uploads\/videos\/video_californices.mp4","\/uploads\/videos\/video_jose.mp4","\/uploads\/videos\/video_andre.mp4","\/uploads\/videos\/video_joyce.mp4","\/uploads\/videos\/video_mateus.mp4","\/uploads\/videos\/video_juan.mp4","\/uploads\/videos\/video_juliaerafael.mp4"]},{"id":15005,"titulo":"Kit Com 650 Envelopes","preco":"62.06","preco_comparacao":"494.90","desconto":"60.00","notas":"5","quantidade_produtos":4312,"descricao":"Kit com 650 envelopes oficiais (3250 figurinhas).","slug":"panini-copa-2026-3","imagem":"\/uploads\/produto_6a0a7aa6590583.31674776.png","fotos":["\/uploads\/produto_6a0a7aa6590583.31674776.png","\/uploads\/produto_6a0a3911ba7309.23392868.png","\/uploads\/produto_6a0a3911ba7b76.72129712.png","\/uploads\/produto_6a0a3911ba7773.60453059.png","\/uploads\/produto_6a0a4470b32140.61596727.png","\/uploads\/produto_6a0a3911ba7992.77301792.png","\/uploads\/produto_6a0a79422b6370.79142815.png","\/uploads\/produto_6a0a79818989a9.20966817.png","\/uploads\/produto_6a0a7a653d7718.09584720.png"],"variacoes":[{"id":78001,"titulo":"Kit Com 650 Envelopes","tipo":"tamanho","preco":"62.06","preco_comparacao":"490.90","imagem":"\/uploads\/produto_6a0a7aa6590583.31674776.png","info":"Atributo: Envelopes"}],"videos":["\/uploads\/videos\/video_carla.mp4","\/uploads\/videos\/video_nandy.mp4","\/uploads\/videos\/video_californices.mp4","\/uploads\/videos\/video_jose.mp4","\/uploads\/videos\/video_andre.mp4","\/uploads\/videos\/video_joyce.mp4","\/uploads\/videos\/video_mateus.mp4","\/uploads\/videos\/video_juan.mp4","\/uploads\/videos\/video_juliaerafael.mp4"]},{"id":15259,"titulo":"Combo 2000 figurinhas [Revenda Atacado]","preco":"152.90","preco_comparacao":"670.00","desconto":"60.00","notas":"5","quantidade_produtos":4312,"descricao":"Combo com 2.000 figurinhas oficiais Panini Copa 2026 — embalagem especial para revendedores e colecionadores que querem completar a coleção rápido ou montar um pequeno estoque para revenda. Inclui figurinhas variadas das 48 seleções, raras e brilhantes proporcionalmente ao mix oficial.","slug":"panini-copa-2026-3","imagem":"\/uploads\/produto_6a1786c87cbba3.65291761.jpg","fotos":["\/uploads\/produto_6a1786c87cbba3.65291761.jpg","\/uploads\/produto_6a0a3911ba7309.23392868.png","\/uploads\/produto_6a0a3911ba7b76.72129712.png","\/uploads\/produto_6a0a3911ba7773.60453059.png","\/uploads\/produto_6a0a4470b32140.61596727.png"],"variacoes":[{"id":78010,"titulo":"Combo 2000 figurinhas","tipo":"tamanho","preco":"152.90","preco_comparacao":"670.00","imagem":"\/uploads\/produto_6a1786c87cbba3.65291761.jpg","info":"Atributo: Combo Revenda"}],"videos":["\/uploads\/videos\/video_carla.mp4","\/uploads\/videos\/video_nandy.mp4","\/uploads\/videos\/video_californices.mp4","\/uploads\/videos\/video_jose.mp4","\/uploads\/videos\/video_andre.mp4","\/uploads\/videos\/video_joyce.mp4","\/uploads\/videos\/video_mateus.mp4","\/uploads\/videos\/video_juan.mp4","\/uploads\/videos\/video_juliaerafael.mp4"]}];
+
+    function num(v){return Number(v||0);}
+    function brl(v){return Number(v||0).toFixed(2).replace('.',',');}
+    function getCarrinho(){return JSON.parse(localStorage.getItem('carrinho')||'[]');}
+    function setCarrinho(c){
+      localStorage.setItem('carrinho',JSON.stringify(c));
+      sessionStorage.setItem('checkoutCarrinho',JSON.stringify(c));
+    }
+
+    function resolverImagem(item) {
+      if (item.imagem && /\.(png|jpe?g|webp|gif)(\?|$)/i.test(item.imagem)) return item.imagem;
+      if (item.produtoId) {
+        const p = PRODUTOS.find(x => String(x.id) === String(item.produtoId));
+        if (p) {
+          if (item.variacaoId && p.variacoes) {
+            const v = p.variacoes.find(x => String(x.id) === String(item.variacaoId));
+            if (v && v.imagem) return v.imagem;
+          }
+          return p.imagem || (p.fotos && p.fotos[0]);
+        }
+      }
+      return item.imagem || '';
+    }
+
+    function renderCarrinho() {
+      const c = getCarrinho();
+      const wrap = document.getElementById('cartItems');
+      const vazio = document.getElementById('cartVazio');
+      const containerWrap = document.getElementById('cartItemsWrap');
+
+      if (!c.length) {
+        wrap.innerHTML = '';
+        vazio.classList.remove('hidden');
+        containerWrap.classList.remove('border');
+      } else {
+        vazio.classList.add('hidden');
+        containerWrap.classList.add('border');
+        wrap.innerHTML = '';
+        c.forEach((it, idx) => {
+          const qtd = Math.max(1, Number(it.quantidade||1));
+          const precoComp = num(it.precoComparacao) || num(it.preco);
+          const desconto = precoComp > num(it.preco) ? Math.round((1 - num(it.preco)/precoComp)*100) : 0;
+          const div = document.createElement('div');
+          div.className = 'cart-item';
+          div.innerHTML = `
+            <img src="${resolverImagem(it)}.html" class="cart-thumb" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=='">
+            <div>
+              <div class="text-sm font-semibold leading-tight">${it.titulo||''}</div>
+              <div class="flex items-center gap-1 mt-1">
+                ${desconto>0?`<span class="bg-rose-100 text-rose-600 text-[10px] font-bold px-1.5 py-0.5 rounded">- ${desconto}%</span>`:''}
+                <span class="bg-green-100 text-green-700 text-[10px] font-bold px-1.5 py-0.5 rounded">Frete grátis</span>
+              </div>
+              <div class="text-rose-600 font-bold mt-1">R$ ${brl(it.preco)}</div>
+              ${precoComp > num(it.preco)?`<div class="text-[11px] line-through text-gray-400">R$ ${brl(precoComp)}</div>`:''}
+            </div>
+            <div class="flex flex-col items-end gap-2">
+              <button onclick="removerItem(${idx})" class="text-gray-400 hover:text-rose-600 text-lg leading-none">×</button>
+              <div class="flex items-center border border-gray-200 rounded">
+                <button onclick="alterarQtd(${idx},-1)" class="qty-btn">-</button>
+                <input type="number" value="${qtd}" min="1" class="qty-input" onchange="alterarQtdDireto(${idx},this.value)">
+                <button onclick="alterarQtd(${idx},1)" class="qty-btn">+</button>
+              </div>
+            </div>
+          `;
+          wrap.appendChild(div);
+        });
+      }
+
+      const total = c.reduce((s,it)=>s + num(it.preco) * Math.max(1,Number(it.quantidade||1)), 0);
+      document.getElementById('cartTotal').textContent = 'R$ ' + brl(total);
+      const totalQtd = c.reduce((s,it)=>s + Math.max(1,Number(it.quantidade||1)), 0);
+      document.getElementById('badge').textContent = totalQtd;
+    }
+
+    function alterarQtd(idx, d) {
+      const c = getCarrinho();
+      if (!c[idx]) return;
+      c[idx].quantidade = Math.max(1, Number(c[idx].quantidade||1)+d);
+      setCarrinho(c);
+      renderCarrinho();
+    }
+    function alterarQtdDireto(idx,v) {
+      const c = getCarrinho();
+      if (!c[idx]) return;
+      let q = parseInt(v,10); if (!q||q<1) q=1;
+      c[idx].quantidade = q;
+      setCarrinho(c);
+      renderCarrinho();
+    }
+    function removerItem(idx) {
+      const c = getCarrinho();
+      c.splice(idx,1);
+      setCarrinho(c);
+      renderCarrinho();
+    }
+    function esvaziar() {
+      if (!getCarrinho().length) return;
+      if (!confirm('Esvaziar carrinho?')) return;
+      setCarrinho([]);
+      renderCarrinho();
+    }
+
+    function renderRecomendados() {
+      const wrap = document.getElementById('recomendados');
+      wrap.innerHTML = '';
+      const c = getCarrinho();
+      const idsNoCart = new Set(c.map(i=>String(i.produtoId)));
+      // Onda 93.120.1: apenas 1 card grande, estilo vazosdebarro
+      const rec = PRODUTOS.filter(p => !idsNoCart.has(String(p.id)))[0];
+      if (!rec) return;
+      const a = document.createElement('a');
+      a.className = 'rel-big';
+      a.href = 'produto.php?produto_id=' + encodeURIComponent(rec.id);
+      a.innerHTML = `
+        <img src="${rec.imagem||''}.html" class="rel-big-img" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=='">
+        <div class="rel-big-title">${rec.titulo}</div>
+        <div class="rel-big-chips">
+          <span class="bg-rose-100 text-rose-600 text-[10px] font-bold px-1.5 py-0.5 rounded">60% OFF</span>
+          <span class="bg-green-100 text-green-700 text-[10px] font-bold px-1.5 py-0.5 rounded">Frete grátis</span>
+        </div>
+        <div class="rel-big-meta">★ ${rec.notas||'4.7'} | ${rec.quantidade_produtos||4312} vendido(s)</div>
+        <div class="rel-big-price">R$ ${brl(rec.preco)}</div>
+        ${rec.preco_comparacao ? `<div class="rel-big-old">R$ ${brl(rec.preco_comparacao)}</div>` : ''}
+      `;
+      wrap.appendChild(a);
+    }
+
+    renderCarrinho();
+    renderRecomendados();
+
+    if (window.ttq) {
+      try { window.ttq.track('ViewCart'); } catch(e){}
+    }
+  </script>
+</body>
+</html>
