@@ -1,0 +1,20 @@
+{
+  "nome": "Album 2026",
+  "descricao": "",
+  "slug": "panini-copa-2026-3",
+  "modelo_landing": "modelo",
+  "logo": "/uploads/logo.webp",
+  "logo_updated_at": 1779057208,
+  "atualizado_em": "2026-05-20T16:03:43-03:00",
+  "banner_ativo": false,
+  "banner": "",
+  "cartinha_titulo_topo": "COMECE COLECIONANDO",
+  "cartinha_desconto_texto": "70% OFF",
+  "cartinha_subtitulo": "no seu pedido!",
+  "cartinha_linha1": "Você pode começar o ano",
+  "cartinha_linha2": "com um novo hobby.",
+  "cartinha_linha3": "Aproveita: Albuns estão com 70% OFF.",
+  "cartinha_linha4": "",
+  "cartinha_timer_prefixo": "Termina em",
+  "cartinha_botao_texto": "Resgatar agora"
+}

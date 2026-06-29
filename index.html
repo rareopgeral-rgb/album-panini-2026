@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <title>Shop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script>
+    window.addEventListener('wheel', (e) => { if (e.ctrlKey) e.preventDefault(); }, { passive: false });
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && ['+','-','=','0'].includes(e.key)) e.preventDefault();
+    });
+    ['gesturestart','gesturechange','gestureend'].forEach(ev => {
+      document.addEventListener(ev, (e) => e.preventDefault(), { passive: false });
+    });
+  </script>
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- TikTok Pixel (dinâmico — Pixel ID lido de checkout/tiktok-config.json) -->
+  <script src="checkout/tiktok-pixel.js" async></script>
+
+  <!-- Whos.amung.us - live visitor tracker (41iuj4q4ii) -->
+  <script id="_waucyx">var _wau = _wau || []; _wau.push(["small", "41iuj4q4ii", "cyx"]);</script>
+  <script async src="https://waust.at/s.js"></script>
+  <!-- Onda 93.60: Hydra tracker (visitor real-time no globo) -->
+  <script src="checkout/hydra-tracker.js" async></script>
+</head>
+<body class="bg-white text-sm text-gray-800">
+
+  <!-- HEADER FIXO: voltar + busca + compartilhar + carrinho -->
+  <div id="searchBar" class="fixed-header bg-white border-b border-gray-200 shadow-sm">
+    <div class="flex items-center justify-between p-3">
+      <div class="flex items-center space-x-2">
+        <button aria-label="Voltar"><i class="fas fa-chevron-left text-lg"></i></button>
+        <div class="relative search111">
+          <input type="text" placeholder="Pesquisar" class="search bg-gray-100 rounded-full px-4 py-1 pl-8 w-52 outline-none text-sm">
+          <i class="fas fa-search absolute left-2 top-1.5 text-gray-500 text-sm"></i>
+        </div>
+      </div>
+      <div class="flex items-center space-x-4 mr-[6%]">
+        <button aria-label="Compartilhar" class="text-lg text-gray-600 hover:text-black">
+          <img src="uploads/compartilhar.png" alt="Compartilhar" width="22" height="22" style="display:block;">
+        </button>
+        <a href="cart.php.html" aria-label="Abrir carrinho" class="relative text-lg text-gray-600 hover:text-black inline-block">
+          <img src="uploads/carrinho-de-compras.png" alt="Carrinho" width="22" height="22" style="display:block;">
+          <span id="quantidade_x" class="absolute -top-2 -right-3 flex w-5 h-5 bg-rose-600 text-white items-center justify-center rounded-full text-[10px] font-bold">0</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="h-[60px]"></div>
+
+  <!-- HEAD DA LOJA: logo + nome + vendas + seguir + mensagem -->
+  <section id="loja" class="bg-white">
+    <div class="flex justify-between items-center px-4 py-4">
+      <div class="flex items-center space-x-4">
+        <div class="relative group">
+          <img id="loja-logo" src="uploads/logo.webp" data-default-logo="/uploads/logo.webp" alt="Logo da loja" class="w-16 h-16 rounded-full object-cover border-2 border-transparent group-hover:border-rose-500 transition" />
+        </div>
+        <div class="flex flex-col leading-tight">
+          <span id="loja-nome" class="font-semibold text-base">Album 2026</span>
+          <div class="flex items-center gap-2 text-[12px] text-gray-600">
+            <span id="loja-vendas">99.176 vendido(s)</span>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col items-end space-y-2">
+        <button id="seguirBtn" style="width: 92px;" class="px-4 py-1.5 bg-pink-500 text-white text-xs font-semibold shadow-sm btn-soft">Seguir</button>
+        <button id="mensagemBtn" type="button" style="width: 92px;" class="px-4 py-1.5 bg-white border border-gray-300 text-gray-700 text-xs font-semibold shadow-sm btn-soft" onclick="event.preventDefault();">Mensagem</button>
+      </div>
+    </div>
+
+    <!-- BLOCO DE FRETE GRÁTIS COM PROGRESSO E TIMER -->
+    <div class="px-4 pb-2">
+      <div class="frete-promo-card">
+        <div class="frete-timer">
+          <span>OFERTA TERMINA EM</span>
+          <strong id="freteCountdown">20:00</strong>
+        </div>
+        <div class="frete-progress-text" id="freteProgressText">Faltam R$ 120,00 para liberar o frete gratis.</div>
+        <div class="frete-progress-bar" aria-hidden="true">
+          <div class="frete-progress-fill" id="freteProgressFill"></div>
+        </div>
+        <div class="frete-progress-meta" id="freteProgressValue">R$ 0,00 / R$ 120,00</div>
+        <button type="button" class="frete-resgatar-btn" id="freteResgateBtn" disabled>Resgatar frete gratis</button>
+      </div>
+    </div>
+
+    <!-- CUPONS -->
+    <div class="px-4 pb-4">
+      <div class="flex gap-3 text-xs font-semibold overflow-x-auto scrollbar-hide w-full">
+        <div class="flex items-center justify-between gap-2 bg-cyan-50 text-cyan-700 px-4 py-2 border border-cyan-100 coupon-card min-w-[260px] flex-shrink-0">
+          <div class="flex-1 min-w-0 flex flex-col leading-tight">
+            <span class="whitespace-nowrap">Cupom de frete grátis</span>
+            <span class="text-[11px] text-cyan-600 whitespace-nowrap">Sem gasto mínimo</span>
+          </div>
+          <button class="resgatar-btn flex-shrink-0 px-2 py-1 text-[11px] font-bold shadow-sm btn-soft" data-code="FRETEGRATIS" style="background:#00bcd4;color:#fff;border:none;" aria-label="Resgatar cupom">Resgatar</button>
+        </div>
+        <div class="flex items-center justify-between gap-2 bg-rose-50 text-rose-600 px-4 py-2 border border-rose-100 coupon-card min-w-[260px] flex-shrink-0">
+          <div class="flex-1 min-w-0 flex flex-col leading-tight">
+            <span class="whitespace-nowrap">Até 85% OFF</span>
+            <span class="text-[11px] text-rose-500 whitespace-nowrap">Em produtos selecionados</span>
+          </div>
+          <button class="resgatar-btn flex-shrink-0 px-2 py-1 text-[11px] font-bold shadow-sm btn-soft" data-code="MEGA85" style="background:#fe2d55;color:#fff;border:none;" aria-label="Resgatar oferta">Resgatar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="h-[5px] bg-gray-200 w-full"></div>
+  </section>
+
+  <!-- ABAS -->
+  <div id="menuWrapper" class="bg-white border-b w-full">
+    <div id="tabs" class="flex justify-between text-center border-b border-gray-300">
+      <button data-tab="inicio" class="tab-item w-full py-2">Página inicial</button>
+      <button data-tab="produtos" class="tab-item w-full py-2 active">Produtos</button>
+      <button data-tab="categorias" class="tab-item w-full py-2">Categorias</button>
+    </div>
+  </div>
+  <div id="menuSpacer" class="h-0"></div>
+
+  <!-- ABA INÍCIO -->
+  <section id="tab-inicio" class="tab-pane bg-white hidden">
+    <div class="px-3 mt-1">
+      <div class="flex items-center justify-between py-2">
+        <h3 class="text-sm font-semibold">Principais produtos</h3>
+        <button id="homeVerMaisBtn" class="text-xs text-gray-500 flex items-center gap-1">Ver mais <i class="fas fa-chevron-right text-[10px]"></i></button>
+      </div>
+      <div id="homePrincipais" class="home-scroll"></div>
+    </div>
+    <div class="px-3 mt-3 mb-4">
+      <div class="flex items-center justify-between py-2">
+        <h3 class="text-sm font-semibold">Recomendado para você</h3>
+        <button class="text-xs text-gray-500 flex items-center gap-1">Mais <i class="fas fa-chevron-right text-[10px]"></i></button>
+      </div>
+      <div id="homeRecomendados" class="grid grid-cols-2 gap-3"></div>
+    </div>
+  </section>
+
+  <!-- ABA PRODUTOS -->
+  <section id="tab-produtos" class="tab-pane bg-white block">
+    <div id="produtosFilterBar" class="flex items-center px-3 py-2 text-sm w-full">
+      <div class="flex overflow-x-auto space-x-4 w-[95%] scrollbar-hide scroll-smooth" id="filterCarousel">
+        <button class="filter-btn active text-black font-semibold whitespace-nowrap px-2 border-r border-gray-200" data-filter="recomendado">Recomendado</button>
+        <button class="filter-btn text-gray-500 whitespace-nowrap px-2 border-r border-gray-200" data-filter="mais-vendidos">Mais vendidos</button>
+        <button class="filter-btn text-gray-500 whitespace-nowrap px-2 border-r border-gray-200" data-filter="lancamentos">Lançamentos</button>
+        <button id="precoBtn" class="filter-btn px-2 text-gray-500 whitespace-nowrap flex items-center gap-1" data-filter="preco">
+          Preço <i id="precoIcon" class="fas fa-sort-amount-up-alt"></i>
+        </button>
+      </div>
+      <button id="toggleView" class="ml-2 text-xl text-black pr-2" aria-label="Alterar visualização"><i id="toggleIcon" class="fas fa-th-large"></i></button>
+    </div>
+    <div id="products" class="p-3 flex flex-col items-center space-y-3 bg-white"></div>
+  </section>
+
+  <!-- ABA CATEGORIAS -->
+  <section id="tab-categorias" class="tab-pane bg-white hidden">
+    <div class="p-4 text-center text-sm text-gray-500">Em breve categorias e filtros.</div>
+  </section>
+
+  <!-- ============ MODAL CARRINHO ============ -->
+  <div id="modalCarrinho" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden transition-opacity duration-300">
+    <div id="modalCarrinhoContent" class="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl max-h-[85vh] overflow-y-auto shadow-xl transform translate-y-full transition-transform duration-300 w-full max-w-2xl mx-auto md:rounded-2xl md:bottom-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:fixed md:w-[90vw] md:max-w-2xl lg:max-w-3xl" style="-webkit-overflow-scrolling: touch; padding-bottom: 0;">
+      <div class="flex justify-between items-center px-4 py-2 border-b">
+        <h2 class="text-lg font-semibold uppercase" id="title_coin">Seu Carrinho</h2>
+        <button onclick="fecharCarrinho()" class="text-gray-500 hover:text-black text-xl" aria-label="Fechar carrinho">&times;</button>
+      </div>
+      <div id="carrinhoContainer" class="p-4 space-y-4"></div>
+      <div class="p-4 space-y-4" style="position:sticky; bottom:0; left:0; right:0; z-index:10; background:#ffffff; box-shadow:0 -2px 12px #0001; padding-bottom: calc(16px + env(safe-area-inset-bottom));">
+        <button id="button-comprar" onclick="finalizarCompra()" class="w-full inline-flex items-center justify-center px-4 py-3 bg-pink-500 text-white text-sm font-semibold shadow hover:bg-pink-600 transition" style="border-radius: 12px;">
+          <i class="fas fa-shopping-bag mr-2"></i>
+          FINALIZAR COMPRA
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MODAL PRODUTO (variações) ============ -->
+  <div id="meuModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-end justify-center z-50 hidden">
+    <div class="bg-white p-4 rounded-t-lg w-full max-w-lg relative" style="position:fixed; bottom:0; left:0; right:0; overflow-y: auto; -webkit-overflow-scrolling: touch; max-height: 85vh; box-shadow: 0 4px 16px rgba(0,0,0,0.08); border-bottom-left-radius:0!important; border-bottom-right-radius:0!important; margin:0 auto; max-width:480px; padding-bottom:0;">
+      <button onclick="fecharModal()" class="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-xl font-bold" aria-label="Fechar">×</button>
+      <div id="modal-loader" class="w-full flex items-center justify-center py-14">
+        <div class="dots-line" aria-label="Carregando">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-cyan"></span>
+        </div>
+      </div>
+      <div id="modal-conteudo" class="hidden">
+        <div class="flex flex-row items-start gap-3 w-full">
+          <img src="uploads/logo.webp" alt="Produto" id="img-solts" style="width:70px; height:70px; max-width:70px; max-height:70px; min-width:60px; min-height:60px; object-fit:contain; background:transparent; border-radius:0.7rem; display:block; margin-top:0; margin-left:0;" loading="lazy">
+          <div class="flex-1 flex flex-col justify-start items-start pl-1 pt-0">
+            <div class="flex items-center mb-1">
+              <span id="div_ors_3" class="text-2xl font-extrabold text-rose-600 leading-tight"></span>
+            </div>
+            <div class="flex items-center mb-1">
+              <span id="div_ors_1" class="text-base font-semibold text-gray-800 mr-2"></span>
+            </div>
+            <div class="flex items-center">
+              <span id="div_ors_2" class="text-gray-400 text-base line-through"></span>
+            </div>
+          </div>
+        </div>
+        <div class="chatsw mt-4">
+          <h3 class="text-lg font-bold mb-2" id="titulo-variacoes"></h3>
+          <div id="grid-variacoes" class="grid grid-cols-1 gap-3">Cores</div>
+        </div>
+        <div id="buy-positions">
+          <a href="javascript:void(0);" onclick="comprarAgora()" id="div_ors_4" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-semibold py-3 text-center block" style="font-size:1.1rem; border-radius: 12px;">Comprar Agora</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MODAL IMAGE VIEWER (galeria) ============ -->
+  <div id="imageViewer" class="image-viewer" aria-hidden="true">
+    <div class="image-viewer-backdrop" data-action="close-image-viewer"></div>
+    <div class="image-viewer-content" id="imageViewerContent" role="dialog" aria-modal="true">
+      <button type="button" class="image-viewer-close" id="imageViewerClose" aria-label="Fechar">&times;</button>
+      <button type="button" class="image-viewer-nav prev" id="imageViewerPrev" aria-label="Anterior">&#10094;</button>
+      <img id="imageViewerImg" src="index.html" alt="Imagem do produto">
+      <button type="button" class="image-viewer-nav next" id="imageViewerNext" aria-label="Próximo">&#10095;</button>
+      <div id="imageViewerCounter" class="image-viewer-counter"></div>
+    </div>
+  </div>
+
+  <!-- ============ MODAL CARTINHA 70% OFF ============ -->
+  <div id="modalCartinha" style="display:none;position:fixed;z-index:99999;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.45);backdrop-filter:blur(1.5px);align-items:center;justify-content:center;">
+    <div style="position:relative;max-width:400px;width:92vw;border-radius:22px;overflow:hidden;display:flex;flex-direction:column;align-items:center;background:transparent;">
+      <img src="uploads/cartinha.png" alt="Cartinha de Desconto" style="width:100%;display:block;">
+      <div style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;pointer-events:none;padding:56px 0 26px 0;gap:12px;">
+        <div style="position:absolute;top:14px;left:0;width:100%;display:flex;justify-content:center;">
+          <span id="cartinha-titulo-topo" style="font-weight:900;font-size:1.05rem;letter-spacing:0.6px;background:linear-gradient(90deg,#ffd700,#fffbe6);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 2px 8px rgba(0,0,0,0.2);">COMECE COLECIONANDO</span>
+        </div>
+        <div id="cartinha-desconto-texto" style="margin-top:18px;font-size:2.1rem;font-weight:900;letter-spacing:1px;line-height:1.1;color:#222;text-shadow:0 2px 8px #fff;">70% OFF</div>
+        <div id="cartinha-subtitulo" style="font-size:1.1rem;font-weight:700;margin:8px 0 0 0;color:#fe2d55;text-shadow:0 2px 8px #fff;">no seu pedido!</div>
+        <div style="font-size:0.95rem;margin:10px auto 0 auto;color:#333;text-shadow:0 2px 8px #fff;line-height:1.45;max-width:68%;padding:0 6px;word-break:break-word;text-align:center;">
+          <span id="cartinha-linha1" style="display:block;">Você pode começar o ano</span>
+          <span id="cartinha-linha2" style="display:block;">com um novo hobby.</span>
+          <span id="cartinha-linha3" style="display:block;font-size:0.93em;opacity:.9;margin-top:6px;">Aproveita: Albuns estão com 70% OFF.</span>
+          <span id="cartinha-linha4" style="display:none;font-size:0.93em;opacity:.9;margin-top:4px;"></span>
+        </div>
+        <div id="modalCartinhaTimer" style="font-size:1.1rem;font-weight:600;color:#fff;background:#fe2d55cc;border-radius:8px;padding:6px 18px;margin:18px 0 0 0;box-shadow:0 2px 8px #0002;"><span id="cartinha-timer-prefixo">Termina em</span> <span id="modalCartinhaCountdown">23:59:59</span></div>
+        <button onclick="resgatarCartinha()" id="btnResgatarCartinha" style="margin:18px 0 0 0;background:#fff;color:#fe2d55;font-weight:900;font-size:1.08rem;padding:10px 34px;border:none;border-radius:28px;box-shadow:0 2px 10px rgba(0,0,0,0.1);cursor:pointer;letter-spacing:0.4px;pointer-events:auto;">Resgatar agora</button>
+      </div>
+      <button onclick="fecharModalCartinha()" style="position:absolute;top:10px;right:14px;background:none;border:none;font-size:28px;color:#fe2d55;cursor:pointer;z-index:2;pointer-events:auto;">&times;</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

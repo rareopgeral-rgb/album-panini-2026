@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Finalização de Compra - Album 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- TikTok Pixel -->
+  <!-- TikTok Pixel (dinâmico — Pixel ID lido de checkout/tiktok-config.json) -->
+  <script src="checkout/tiktok-pixel.js.php" async></script>
+
+  <style>
+    body { background: #fff; }
+    @keyframes loadingMove { from { background-position: 0 0; } to { background-position: 36px 0; } }
+    .loading-bar {
+      height: 4px;
+      background-image: repeating-linear-gradient(45deg, #ec4899 0 12px, #06b6d4 12px 24px);
+      background-size: 36px 100%;
+      animation: loadingMove 1.5s linear infinite;
+    }
+    .step-circle { width: 32px; height: 32px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; }
+    .step.active .step-circle { background: #111827; color: #fff; }
+    .step.done .step-circle { background: #10b981; color: #fff; }
+    .step:not(.active):not(.done) .step-circle { background: #e5e7eb; color: #9ca3af; }
+    .step-label { font-size: 12px; font-weight: 600; margin-top: 4px; }
+    .step.active .step-label { color: #111827; }
+    .step:not(.active):not(.done) .step-label { color: #9ca3af; }
+    .ck-input { width: 100%; padding: 10px 12px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px; }
+    .ck-input:focus { outline: none; border-color: #fe2d55; box-shadow: 0 0 0 3px rgba(254,45,85,0.1); }
+    .ck-label { font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 4px; display: block; }
+    .frete-option { display: flex; align-items: center; gap: 12px; padding: 12px; border: 2px solid #e5e7eb; border-radius: 10px; cursor: pointer; transition: all .15s; }
+    .frete-option:hover { border-color: #fb7185; }
+    .frete-option.active { border-color: #fe2d55; background: #fff5f7; }
+    .frete-option input { accent-color: #fe2d55; }
+    .pg-option { display: flex; align-items: center; gap: 10px; padding: 14px; border: 2px solid #e5e7eb; border-radius: 10px; cursor: pointer; }
+    .pg-option:hover { border-color: #fb7185; }
+    .pg-option.active { border-color: #fe2d55; background: #fff5f7; }
+    .pg-option input { accent-color: #fe2d55; }
+    .ob-card { border: 1px solid #e5e7eb; border-radius: 10px; padding: 12px; background: #fff; }
+    .ob-card.has-cart { border-color: #14b8a6; background: #f0fdfa; }
+    .ob-card .bg-teal-500 { background: #14b8a6; }
+    .ob-card .bg-teal-500:hover { background: #0d9488; }
+    .ck-item { display: grid; grid-template-columns: 60px 1fr auto; gap: 12px; align-items: center; padding: 12px; border-bottom: 1px solid #f3f4f6; }
+    .ck-item:last-child { border-bottom: none; }
+    .ck-thumb { width: 60px; height: 60px; border-radius: 8px; background: #f9fafb; object-fit: contain; border: 1px solid #f3f4f6; }
+    .qty-btn { width: 28px; height: 28px; border: 1px solid #d1d5db; background: #fff; border-radius: 6px; font-weight: 700; color: #374151; }
+    .qty-input { width: 36px; text-align: center; border: none; outline: none; font-weight: 600; }
+    .step-pane { display: none; }
+    .step-pane.active { display: block; }
+  </style>
+  <!-- Onda 93.60: Hydra tracker (visitor real-time no globo) -->
+  <script src="checkout/hydra-tracker.js%3Fv=93.60" async></script>
+</head>
+<body class="text-gray-800">
+
+  <!-- HEADER -->
+  <header class="bg-white border-b border-gray-100 sticky top-0 z-30">
+    <div class="max-w-2xl mx-auto px-4 py-3 grid grid-cols-3 items-center">
+      <div><a href="index.html" class="text-gray-700 inline-block p-1"><i class="fas fa-arrow-left"></i></a></div>
+      <div class="text-center">
+        <h1 class="text-base font-semibold">Resumo do Pedido</h1>
+        <div class="text-[11px] text-green-600 font-semibold flex items-center justify-center gap-1 h-4">
+          <i id="hdrIcon" class="fas fa-shield-halved"></i> <span id="hdrTxt">Compra garantida</span>
+        </div>
+      </div>
+      <div></div>
+    </div>
+    <div class="loading-bar"></div>
+  </header>
+  <script>
+    // Rotação de selos no header (igual ao original pay.pcloghs.shop)
+    (function() {
+      const selos = [
+        { icone: 'fa-lock',           texto: 'Dados criptografados' },
+        { icone: 'fa-shield-halved',  texto: 'Compra garantida' },
+        { icone: 'fa-shield-heart',   texto: 'Pagamento 100% seguro' },
+      ];
+      let i = 1;
+      setInterval(() => {
+        i = (i + 1) % selos.length;
+        const ic = document.getElementById('hdrIcon');
+        const tx = document.getElementById('hdrTxt');
+        if (ic && tx) { ic.className = 'fas ' + selos[i].icone; tx.textContent = selos[i].texto; }
+      }, 3000);
+    })();
+  </script>
+
+  <main class="max-w-2xl mx-auto pb-32">
+
+    <!-- LINHA TRACEJADA DECORATIVA (igual original — azul/rosa alternando) -->
+    <div class="mx-4 mt-3 mb-1 flex gap-1 h-1">
+      <div class="flex-1 rounded-full" style="background: repeating-linear-gradient(90deg,#60a5fa 0 12px, transparent 12px 18px, #f43f5e 18px 30px, transparent 30px 36px);"></div>
+    </div>
+
+    <!-- LOJA + ITENS -->
+    <div class="px-4 pt-3 pb-2 text-xs text-gray-500">Loja (<span id="totalItensTop">0</span> itens)</div>
+
+    <!-- BANNER FRETE GRÁTIS -->
+    <div class="mx-4 mb-3 bg-blue-50 border border-blue-100 rounded-lg px-4 py-3 flex items-center gap-2 text-sm" id="bannerFreteGratis" style="display:none;">
+      <i class="fas fa-truck text-blue-600"></i>
+      <span class="font-semibold text-blue-900">Você ganhou frete grátis!</span>
+    </div>
+
+    <!-- RESUMO ITENS -->
+    <section class="bg-white border border-gray-100 rounded-lg mx-4 mb-3">
+      <div class="px-4 py-2 border-b border-gray-100 text-sm font-semibold">Resumo do carrinho (<span id="totalItensList">0</span> itens)</div>
+      <div id="ckItens"></div>
+    </section>
+
+    <!-- DESCONTOS BANNER -->
+    <div id="bannerDescontos" class="mx-4 mb-3 bg-rose-50 border border-rose-200 rounded-lg px-4 py-2 flex items-center justify-between text-sm" style="display:none;">
+      <div class="flex items-center gap-2 text-rose-700">
+        <i class="fas fa-tag"></i>
+        <span class="font-semibold">Descontos aplicados</span>
+      </div>
+      <span class="font-bold text-rose-700" id="bannerDescontosValor">R$ 0,00</span>
+    </div>
+
+    <!-- RESUMO FINANCEIRO -->
+    <section class="bg-white border border-gray-100 rounded-lg mx-4 mb-4 p-4">
+      <div class="text-sm font-semibold mb-3">Resumo financeiro</div>
+      <div class="space-y-2 text-sm">
+        <div class="flex justify-between"><span class="text-gray-600">Subtotal</span><span id="rfSubtotal">R$ 0,00</span></div>
+        <div class="flex justify-between text-rose-600"><span>Descontos</span><span id="rfDesconto">R$ 0,00</span></div>
+        <div class="flex justify-between"><span class="text-gray-600">Frete</span><span id="rfFrete">—</span></div>
+        <div class="flex justify-between font-bold text-base pt-2 border-t border-gray-100">
+          <span>Total</span>
+          <span id="rfTotal">R$ 0,00</span>
+        </div>
+        <div class="text-right text-[11px] text-gray-400">Impostos inclusos</div>
+      </div>
+    </section>
+
+    <!-- STEPPER -->
+    <div class="px-4 mb-2">
+      <div class="flex items-center justify-between max-w-md mx-auto" id="stepperRoot">
+        <div class="step active flex flex-col items-center" data-step="1">
+          <span class="step-circle">1</span>
+          <span class="step-label">Identificação</span>
+        </div>
+        <div class="h-px bg-gray-200 flex-1 mx-2"></div>
+        <div class="step flex flex-col items-center" data-step="2">
+          <span class="step-circle">2</span>
+          <span class="step-label">Entrega</span>
+        </div>
+        <div class="h-px bg-gray-200 flex-1 mx-2"></div>
+        <div class="step flex flex-col items-center" data-step="3">
+          <span class="step-circle">3</span>
+          <span class="step-label">Pagamento</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ETAPA 1 - IDENTIFICAÇÃO -->
+    <section id="step-1" class="step-pane active bg-white border border-gray-100 rounded-lg mx-4 mb-4 p-4 space-y-3">
+      <div><label class="ck-label">E-mail</label><input class="ck-input" id="fldEmail" type="email" placeholder="voce@email.com"></div>
+      <div><label class="ck-label">Telefone</label><input class="ck-input" id="fldTel" placeholder="(99) 99999-9999"></div>
+      <div><label class="ck-label">Nome completo</label><input class="ck-input" id="fldNome" placeholder="Nome e Sobrenome"></div>
+      <div><label class="ck-label">CPF/CNPJ</label><input class="ck-input" id="fldCpf" placeholder="000.000.000-00"></div>
+
+      <!-- Caixa explicativa LGPD (idêntica ao original) -->
+      <div class="border border-dashed border-gray-300 rounded-lg p-3 mt-2 bg-gray-50">
+        <div class="text-sm font-semibold mb-1 text-gray-700">Por que precisamos desses dados?</div>
+        <ul class="text-[12px] text-gray-600 space-y-0.5 list-disc list-inside leading-snug">
+          <li>Enviar o comprovante de compra;</li>
+          <li>Garantir a devolução caso necessário;</li>
+          <li>Acompanhar o andamento do pedido.</li>
+        </ul>
+      </div>
+
+      <button onclick="irPara(2)" class="w-full bg-gray-900 hover:bg-black text-white font-bold py-3 rounded-lg text-sm mt-3">
+        Ir para entrega
+      </button>
+    </section>
+
+    <!-- ETAPA 2 - ENTREGA -->
+    <section id="step-2" class="step-pane bg-white border border-gray-100 rounded-lg mx-4 mb-4 p-4 space-y-3">
+      <div class="grid grid-cols-2 gap-3">
+        <div><label class="ck-label">CEP</label><input class="ck-input" id="fldCep" placeholder="00000-000"></div>
+        <div><label class="ck-label">Número</label><input class="ck-input" id="fldNum" placeholder="123"></div>
+      </div>
+      <div><label class="ck-label">Endereço</label><input class="ck-input" id="fldEnd" placeholder="Rua / Av."></div>
+      <div><label class="ck-label">Bairro</label><input class="ck-input" id="fldBairro" placeholder="Bairro"></div>
+      <div class="grid grid-cols-2 gap-3">
+        <div><label class="ck-label">Cidade</label><input class="ck-input" id="fldCidade" placeholder="Cidade"></div>
+        <div><label class="ck-label">Estado</label><input class="ck-input" id="fldUf" placeholder="UF" maxlength="2"></div>
+      </div>
+      <div><label class="ck-label">Complemento</label><input class="ck-input" id="fldCompl" placeholder="Apto, casa, ponto de referência..."></div>
+
+      <div class="pt-2">
+        <div class="text-sm font-semibold mb-2">Escolha o frete</div>
+        <div class="space-y-2">
+          <label class="frete-option active" data-frete="jadlog" data-valor="22.50" data-label="JadLog">
+            <input type="radio" name="frete" value="jadlog" checked>
+            <div class="flex-1">
+              <div class="font-semibold text-sm">JadLog</div>
+              <div class="text-[11px] text-gray-500">Receba em até 2 dias úteis</div>
+            </div>
+            <div class="font-bold">R$ 22,50</div>
+          </label>
+          <label class="frete-option" data-frete="sedex" data-valor="15.50" data-label="Sedex-Express">
+            <input type="radio" name="frete" value="sedex">
+            <div class="flex-1">
+              <div class="font-semibold text-sm">Sedex-Express</div>
+              <div class="text-[11px] text-gray-500">Receba em até 4 dias úteis</div>
+            </div>
+            <div class="font-bold">R$ 15,50</div>
+          </label>
+          <label class="frete-option" data-frete="correio" data-valor="0" data-label="Correio">
+            <input type="radio" name="frete" value="correio">
+            <div class="flex-1">
+              <div class="font-semibold text-sm">Correio</div>
+              <div class="text-[11px] text-gray-500">Receba em até 7 dias úteis</div>
+            </div>
+            <div class="font-bold text-green-600">R$ 0,00</div>
+          </label>
+        </div>
+        <div class="text-[11px] text-gray-500 mt-2" id="freteSelected">Frete selecionado: JadLog (R$ 22,50)</div>
+      </div>
+
+      <!-- Botão avançar pra pagamento -->
+      <div class="flex gap-2 pt-3">
+        <button onclick="irPara(1)" class="px-4 py-3 border border-gray-300 text-gray-700 rounded-lg text-sm font-semibold">Voltar</button>
+        <button onclick="irPara(3)" class="flex-1 bg-gray-900 hover:bg-black text-white font-bold py-3 rounded-lg text-sm">
+          Ir para pagamento
+        </button>
+      </div>
+    </section>
+
+    <!-- ETAPA 3 - PAGAMENTO -->
+    <section id="step-3" class="step-pane bg-white border border-gray-100 rounded-lg mx-4 mb-4 p-4 space-y-3">
+
+      <!-- ORDER BUMPS — "Acho que você vai gostar destas ofertas ;)" -->
+      <div class="-mx-4 px-4">
+        <div class="text-center text-sm text-gray-600 mb-3">Acho que você vai gostar destas ofertas ;)</div>
+        <div class="space-y-3" id="orderBumpsList">
+          <!-- Bump 1 - Neymar Edition -->
+          <div class="ob-card" data-bump-id="bump_neymar" data-preco="4.90" data-precocomp="31.90" data-titulo="[Lançamento] Novo Lote Neymar Edition" data-imagem="https://pay.pcloghs.shop/uploads/produto_6a0e486ca19f66.83667037.jpg">
+            <div class="flex gap-3">
+              <img src="https://pay.pcloghs.shop/uploads/produto_6a0e486ca19f66.83667037.jpg" alt="Neymar Edition" class="w-16 h-16 rounded object-cover bg-gray-50 flex-shrink-0">
+              <div class="flex-1 min-w-0">
+                <div class="text-sm font-semibold leading-snug">[Lançamento] Novo Lote Neymar Edition chance de 12%. aumente sua chance ao adicionar mais!</div>
+                <div class="text-[11px] text-gray-400 line-through">R$ 31,90</div>
+                <div class="flex items-baseline gap-1">
+                  <span class="text-rose-600 font-bold">R$ 4,90</span>
+                  <span class="text-[10px] text-rose-500">(R$ 27,00 OFF)</span>
+                </div>
+                <div class="text-[10px] text-amber-700 font-semibold">Cada item soma 12% | +1: 12%</div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between mt-2">
+              <div class="flex items-center gap-1 border border-gray-200 rounded bg-white">
+                <button type="button" onclick="bumpQtd('bump_neymar',-1)" class="px-2 text-gray-600">−</button>
+                <span data-bump-qtd-add="bump_neymar" class="text-xs font-semibold w-6 text-center">1</span>
+                <button type="button" onclick="bumpQtd('bump_neymar',+1)" class="px-2 text-gray-600">+</button>
+              </div>
+              <div class="text-[11px] text-gray-500">No carrinho <span data-bump-qtd-cart="bump_neymar" class="font-bold">0</span></div>
+            </div>
+            <button type="button" onclick="adicionarBump('bump_neymar')" class="w-full mt-2 py-2 bg-teal-500 hover:bg-teal-600 text-white font-bold text-sm rounded">Adicionar item</button>
+          </div>
+
+          <!-- Bump 2 - Figurinhas Raras -->
+          <div class="ob-card" data-bump-id="bump_raras" data-preco="12.70" data-precocomp="39.58" data-titulo="Aumente suas chances para garantir Figurinhas Raras" data-imagem="https://pay.pcloghs.shop/uploads/produto_6a0e5dbe4dd5d0.28906644.jpg">
+            <div class="flex gap-3">
+              <img src="https://pay.pcloghs.shop/uploads/produto_6a0e5dbe4dd5d0.28906644.jpg" alt="Figurinhas Raras" class="w-16 h-16 rounded object-cover bg-gray-50 flex-shrink-0">
+              <div class="flex-1 min-w-0">
+                <div class="text-sm font-semibold leading-snug">Aumente suas chances para garantir Figurinhas Raras <span class="text-yellow-400">✨</span></div>
+                <div class="text-[11px] text-gray-400 line-through">R$ 39,58</div>
+                <div class="flex items-baseline gap-1">
+                  <span class="text-rose-600 font-bold">R$ 12,70</span>
+                  <span class="text-[10px] text-rose-500">(R$ 26,88 OFF)</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between mt-2">
+              <div class="flex items-center gap-1 border border-gray-200 rounded bg-white">
+                <button type="button" onclick="bumpQtd('bump_raras',-1)" class="px-2 text-gray-600">−</button>
+                <span data-bump-qtd-add="bump_raras" class="text-xs font-semibold w-6 text-center">1</span>
+                <button type="button" onclick="bumpQtd('bump_raras',+1)" class="px-2 text-gray-600">+</button>
+              </div>
+              <div class="text-[11px] text-gray-500">No carrinho <span data-bump-qtd-cart="bump_raras" class="font-bold">0</span></div>
+            </div>
+            <button type="button" onclick="adicionarBump('bump_raras')" class="w-full mt-2 py-2 bg-teal-500 hover:bg-teal-600 text-white font-bold text-sm rounded">Adicionar item</button>
+          </div>
+
+          <!-- Bump 3 - Caixinha Temática -->
+          <div class="ob-card" data-bump-id="bump_caixinha" data-preco="8.98" data-precocomp="37.58" data-titulo="Caixinha Temática Copa do Mundo 2026" data-imagem="https://pay.pcloghs.shop/uploads/produto_6a0e700a020cb0.66250797.jpg">
+            <div class="flex gap-3">
+              <img src="https://pay.pcloghs.shop/uploads/produto_6a0e700a020cb0.66250797.jpg" alt="Caixinha Copa" class="w-16 h-16 rounded object-cover bg-gray-50 flex-shrink-0">
+              <div class="flex-1 min-w-0">
+                <div class="text-sm font-semibold leading-snug">Caixinha Temática Copa do Mundo 2026 - Capacidade até 500 Figurinhas</div>
+                <div class="text-[11px] text-gray-400 line-through">R$ 37,58</div>
+                <div class="flex items-baseline gap-1">
+                  <span class="text-rose-600 font-bold">R$ 8,98</span>
+                  <span class="text-[10px] text-rose-500">(R$ 28,60 OFF)</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between mt-2">
+              <div class="flex items-center gap-1 border border-gray-200 rounded bg-white">
+                <button type="button" onclick="bumpQtd('bump_caixinha',-1)" class="px-2 text-gray-600">−</button>
+                <span data-bump-qtd-add="bump_caixinha" class="text-xs font-semibold w-6 text-center">1</span>
+                <button type="button" onclick="bumpQtd('bump_caixinha',+1)" class="px-2 text-gray-600">+</button>
+              </div>
+              <div class="text-[11px] text-gray-500">No carrinho <span data-bump-qtd-cart="bump_caixinha" class="font-bold">0</span></div>
+            </div>
+            <button type="button" onclick="adicionarBump('bump_caixinha')" class="w-full mt-2 py-2 bg-teal-500 hover:bg-teal-600 text-white font-bold text-sm rounded">Adicionar item</button>
+          </div>
+
+          <!-- Bump 4 - Adesivo Neymar Jr. & Mercado Livre -->
+          <div class="ob-card" data-bump-id="bump_adesivo_neymar" data-preco="19.99" data-precocomp="59.99" data-titulo="Adesivo Autocolante Neymar Jr. & Mercado Livre" data-imagem="https://pay.pcloghs.shop/uploads/produto_6a14b613a9e9f2.05609962.jpg">
+            <div class="flex gap-3">
+              <img src="https://pay.pcloghs.shop/uploads/produto_6a14b613a9e9f2.05609962.jpg" alt="Adesivo Neymar" class="w-16 h-16 rounded object-cover bg-gray-50 flex-shrink-0">
+              <div class="flex-1 min-w-0">
+                <div class="text-sm font-semibold leading-snug">Adesivo Autocolante Neymar Jr. & Mercado Livre</div>
+                <div class="text-[11px] text-gray-400 line-through">R$ 59,99</div>
+                <div class="flex items-baseline gap-1">
+                  <span class="text-rose-600 font-bold">R$ 19,99</span>
+                  <span class="text-[10px] text-rose-500">(R$ 40,00 OFF)</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between mt-2">
+              <div class="flex items-center gap-1 border border-gray-200 rounded bg-white">
+                <button type="button" onclick="bumpQtd('bump_adesivo_neymar',-1)" class="px-2 text-gray-600">−</button>
+                <span data-bump-qtd-add="bump_adesivo_neymar" class="text-xs font-semibold w-6 text-center">1</span>
+                <button type="button" onclick="bumpQtd('bump_adesivo_neymar',+1)" class="px-2 text-gray-600">+</button>
+              </div>
+              <div class="text-[11px] text-gray-500">No carrinho <span data-bump-qtd-cart="bump_adesivo_neymar" class="font-bold">0</span></div>
+            </div>
+            <button type="button" onclick="adicionarBump('bump_adesivo_neymar')" class="w-full mt-2 py-2 bg-teal-500 hover:bg-teal-600 text-white font-bold text-sm rounded">Adicionar item</button>
+          </div>
+
+          <!-- Bump 5 - Kit 6 Garrafas Coca-Cola Copa 2026 -->
+          <div class="ob-card" data-bump-id="bump_cocacola" data-preco="29.90" data-precocomp="79.90" data-titulo="Kit 6 Garrafas Coca-cola 600ml Copa 2026 Panini Figurinhas" data-imagem="https://pay.pcloghs.shop/uploads/produto_6a14b5bac7cfa6.85786582.jpg">
+            <div class="flex gap-3">
+              <img src="https://pay.pcloghs.shop/uploads/produto_6a14b5bac7cfa6.85786582.jpg" alt="Kit Coca-Cola" class="w-16 h-16 rounded object-cover bg-gray-50 flex-shrink-0">
+              <div class="flex-1 min-w-0">
+                <div class="text-sm font-semibold leading-snug">Kit 6 Garrafas Coca-cola 600ml Copa 2026 Panini Figurinhas</div>
+                <div class="text-[11px] text-gray-400 line-through">R$ 79,90</div>
+                <div class="flex items-baseline gap-1">
+                  <span class="text-rose-600 font-bold">R$ 29,90</span>
+                  <span class="text-[10px] text-rose-500">(R$ 50,00 OFF)</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between mt-2">
+              <div class="flex items-center gap-1 border border-gray-200 rounded bg-white">
+                <button type="button" onclick="bumpQtd('bump_cocacola',-1)" class="px-2 text-gray-600">−</button>
+                <span data-bump-qtd-add="bump_cocacola" class="text-xs font-semibold w-6 text-center">1</span>
+                <button type="button" onclick="bumpQtd('bump_cocacola',+1)" class="px-2 text-gray-600">+</button>
+              </div>
+              <div class="text-[11px] text-gray-500">No carrinho <span data-bump-qtd-cart="bump_cocacola" class="font-bold">0</span></div>
+            </div>
+            <button type="button" onclick="adicionarBump('bump_cocacola')" class="w-full mt-2 py-2 bg-teal-500 hover:bg-teal-600 text-white font-bold text-sm rounded">Adicionar item</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Forma de pagamento (PIX fixo) -->
+      <div class="pt-4 border-t border-gray-100 mt-4">
+        <div class="text-sm font-semibold mb-2">Forma de pagamento</div>
+        <label class="pg-option active" data-method="pix">
+          <input type="radio" name="pg" value="pix" checked>
+          <i class="fas fa-qrcode text-rose-600 text-xl"></i>
+          <div class="flex-1">
+            <div class="font-semibold">PIX à vista</div>
+            <div class="text-xs text-gray-500">Aprovação imediata</div>
+          </div>
+          <span class="text-xs text-rose-600 font-bold">5% OFF</span>
+        </label>
+      </div>
+
+      <div class="flex gap-2 pt-3">
+        <button onclick="irPara(2)" class="px-4 py-3 border border-gray-300 text-gray-700 rounded-lg text-sm font-semibold">Voltar</button>
+        <button onclick="confirmarPedido(this)" class="flex-1 bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 rounded-lg text-sm uppercase shadow-lg">
+          <i class="fas fa-shield-halved mr-2"></i> FINALIZAR E GERAR PIX
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BANNER FIXO ECONOMIA -->
+  <div id="bannerEconomia" class="fixed bottom-[60px] left-0 right-0 bg-rose-50 border-y border-rose-200 px-4 py-2 text-center text-[12px] text-rose-700 font-semibold z-20" style="display:none;">
+    🎁 Você está economizando <span id="economiaValor">R$ 0,00</span> neste pedido.
+  </div>
+
+  <!-- FOOTER FIXO -->
+  <footer class="fixed bottom-0 left-0 right-0 bg-rose-600 text-white text-center text-sm font-bold py-3 z-30 flex items-center justify-center gap-2">
+    <i class="far fa-clock"></i> O cupom expira em <span id="timerCupom">05:00:00</span>
+  </footer>
+
+  <script>
+    const FRETE_GRATIS_MIN = 0; // Frete grátis acima de... (0 = sem regra)
+    const PIX_DESCONTO_PCT = 5;
+
+    // Frete default: JadLog (R$ 22,50, 2 dias úteis) — alinhado ao original
+    let freteValor = 22.50;
+    let freteLabel = 'JadLog';
+    let pgMetodo = 'pix';
+
+    function num(v) { return Number(v || 0); }
+    function brl(v) { return Number(v||0).toFixed(2).replace('.', ','); }
+
+    function getCarrinho() {
+      const s = sessionStorage.getItem('checkoutCarrinho');
+      if (s) return JSON.parse(s);
+      return JSON.parse(localStorage.getItem('carrinho') || '[]');
+    }
+    function saveCarrinho(c) {
+      sessionStorage.setItem('checkoutCarrinho', JSON.stringify(c));
+      localStorage.setItem('carrinho', JSON.stringify(c));
+    }
+
+    function renderItens() {
+      const c = getCarrinho();
+      const wrap = document.getElementById('ckItens');
+      wrap.innerHTML = '';
+      let totalQtd = 0;
+      c.forEach((it, idx) => {
+        const qtd = Math.max(1, Number(it.quantidade||1));
+        totalQtd += qtd;
+        const sub = num(it.preco) * qtd;
+        const precoComp = num(it.precoComparacao) || num(it.preco);
+        const desconto = precoComp > num(it.preco) ? Math.round((1 - num(it.preco)/precoComp) * 100) : 0;
+        const div = document.createElement('div');
+        div.className = 'ck-item';
+        div.innerHTML = `
+          <img src="${it.imagem||''}.html" class="ck-thumb" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=='">
+          <div>
+            <div class="text-sm font-semibold leading-tight">${it.titulo||''}</div>
+            <div class="flex items-center gap-1 mt-1">
+              ${desconto>0?`<span class="bg-rose-100 text-rose-600 text-[10px] font-bold px-1.5 py-0.5 rounded">- ${desconto}%</span>`:''}
+              <span class="bg-green-100 text-green-700 text-[10px] font-bold px-1.5 py-0.5 rounded">Frete grátis</span>
+            </div>
+            <div class="text-rose-600 text-base font-bold mt-1">R$ ${brl(it.preco)}</div>
+            ${precoComp > num(it.preco)?`<div class="text-[11px] line-through text-gray-400">R$ ${brl(precoComp)}</div>`:''}
+            <div class="text-right text-[11px] text-gray-500 mt-1">Subtotal: R$ ${brl(sub)}</div>
+          </div>
+          <div class="flex flex-col items-end gap-2">
+            <button onclick="removerItem(${idx})" class="text-gray-400 hover:text-rose-600 text-base">×</button>
+            <div class="flex items-center border border-gray-200 rounded">
+              <button onclick="alterarQtd(${idx}, -1)" class="qty-btn">-</button>
+              <input type="number" value="${qtd}" min="1" class="qty-input" data-idx="${idx}" onchange="alterarQtdDireto(${idx}, this.value)">
+              <button onclick="alterarQtd(${idx}, 1)" class="qty-btn">+</button>
+            </div>
+          </div>
+        `;
+        wrap.appendChild(div);
+      });
+      document.getElementById('totalItensTop').textContent = totalQtd;
+      document.getElementById('totalItensList').textContent = totalQtd;
+    }
+
+    function alterarQtd(idx, d) {
+      const c = getCarrinho();
+      if (!c[idx]) return;
+      c[idx].quantidade = Math.max(1, Number(c[idx].quantidade||1) + d);
+      saveCarrinho(c);
+      renderItens(); calcular();
+    }
+    function alterarQtdDireto(idx, v) {
+      const c = getCarrinho();
+      if (!c[idx]) return;
+      let q = parseInt(v,10); if (!q || q < 1) q = 1;
+      c[idx].quantidade = q;
+      saveCarrinho(c);
+      renderItens(); calcular();
+    }
+    function removerItem(idx) {
+      const c = getCarrinho();
+      c.splice(idx, 1);
+      saveCarrinho(c);
+      renderItens(); calcular();
+    }
+
+    function calcular() {
+      const c = getCarrinho();
+      const subtotal = c.reduce((s,it)=>s + num(it.preco) * Math.max(1, Number(it.quantidade||1)), 0);
+      const subtotalComp = c.reduce((s,it)=>s + num(it.precoComparacao||it.preco) * Math.max(1, Number(it.quantidade||1)), 0);
+      const descontoBase = Math.max(0, subtotalComp - subtotal);
+      const descontoPix = pgMetodo === 'pix' ? subtotal * (PIX_DESCONTO_PCT/100) : 0;
+      const descontoTotal = descontoBase + descontoPix;
+      const total = Math.max(0, subtotal + freteValor - descontoPix);
+
+      document.getElementById('rfSubtotal').textContent = 'R$ ' + brl(subtotal);
+      document.getElementById('rfDesconto').textContent = '- R$ ' + brl(descontoPix);
+      document.getElementById('rfFrete').textContent = freteValor === 0 ? freteLabel + ' (R$ 0,00)' : freteLabel + ' (R$ ' + brl(freteValor) + ')';
+      document.getElementById('rfTotal').textContent = 'R$ ' + brl(total);
+
+      // Banner frete grátis
+      const fg = document.getElementById('bannerFreteGratis');
+      fg.style.display = subtotal > 0 ? 'flex' : 'none';
+
+      // Banner descontos
+      const bd = document.getElementById('bannerDescontos');
+      if (descontoBase > 0) {
+        bd.style.display = 'flex';
+        document.getElementById('bannerDescontosValor').textContent = 'R$ ' + brl(descontoBase);
+      } else { bd.style.display = 'none'; }
+
+      // Banner economia
+      const be = document.getElementById('bannerEconomia');
+      if (descontoBase > 0) {
+        be.style.display = 'block';
+        document.getElementById('economiaValor').textContent = 'R$ ' + brl(descontoBase);
+      } else { be.style.display = 'none'; }
+
+      // Atualiza indicador "No carrinho" dos order bumps
+      atualizarBumpsCart();
+    }
+
+    // ===== ORDER BUMPS =====
+    const bumpsToAdd = {}; // qtd no spinner (ainda não adicionada)
+    function bumpQtd(id, delta) {
+      const cur = bumpsToAdd[id] ?? 1;
+      const v = Math.max(1, cur + delta);
+      bumpsToAdd[id] = v;
+      const el = document.querySelector(`[data-bump-qtd-add="${id}"]`);
+      if (el) el.textContent = v;
+    }
+    function adicionarBump(id) {
+      const card = document.querySelector(`.ob-card[data-bump-id="${id}"]`);
+      if (!card) return;
+      const qtd = bumpsToAdd[id] ?? 1;
+      const item = {
+        produtoId: id,
+        variacaoId: null,
+        tipoVariacao: 'bump',
+        titulo: card.dataset.titulo,
+        preco: parseFloat(card.dataset.preco),
+        precoComparacao: parseFloat(card.dataset.precocomp),
+        imagem: card.dataset.imagem,
+        quantidade: qtd,
+        isBump: true
+      };
+      const c = getCarrinho();
+      const idx = c.findIndex(p => String(p.produtoId) === String(id) && p.isBump);
+      if (idx >= 0) c[idx].quantidade = (c[idx].quantidade || 1) + qtd;
+      else c.push(item);
+      saveCarrinho(c);
+      bumpsToAdd[id] = 1;
+      const spinner = document.querySelector(`[data-bump-qtd-add="${id}"]`);
+      if (spinner) spinner.textContent = '1';
+      // TikTok track
+      if (window.ttq) {
+        try { window.ttq.track('AddToCart', { contents: [{content_id: id, content_name: item.titulo, content_type: 'product', price: item.preco, quantity: qtd}], value: item.preco * qtd, currency: 'BRL' }); } catch(e){}
+      }
+      renderItens();
+      calcular();
+    }
+    function atualizarBumpsCart() {
+      const c = getCarrinho();
+      document.querySelectorAll('.ob-card').forEach(card => {
+        const id = card.dataset.bumpId;
+        const inCart = c.filter(p => String(p.produtoId) === String(id) && p.isBump).reduce((s,p)=>s+(p.quantidade||1),0);
+        const el = card.querySelector(`[data-bump-qtd-cart="${id}"]`);
+        if (el) el.textContent = inCart;
+        if (inCart > 0) card.classList.add('has-cart'); else card.classList.remove('has-cart');
+      });
+    }
+
+    // Stepper navigation
+    // Valida CPF com dígitos verificadores (algoritmo oficial Receita)
+    function cpfValido(cpf) {
+      cpf = String(cpf || '').replace(/\D/g,'');
+      if (cpf.length !== 11) return false;
+      if (/^(\d)\1{10}$/.test(cpf)) return false; // todos iguais (00000... 11111... etc)
+      let s = 0;
+      for (let i = 0; i < 9; i++) s += parseInt(cpf[i]) * (10 - i);
+      let d1 = 11 - (s % 11); if (d1 >= 10) d1 = 0;
+      if (d1 !== parseInt(cpf[9])) return false;
+      s = 0;
+      for (let i = 0; i < 10; i++) s += parseInt(cpf[i]) * (11 - i);
+      let d2 = 11 - (s % 11); if (d2 >= 10) d2 = 0;
+      return d2 === parseInt(cpf[10]);
+    }
+
+    function irPara(n) {
+      // Avançar pra etapa 2 ou 3: precisa ter Identificação válida
+      if (n >= 2) {
+        const email = document.getElementById('fldEmail').value.trim();
+        const tel = document.getElementById('fldTel').value.trim();
+        const nome = document.getElementById('fldNome').value.trim();
+        const cpf = document.getElementById('fldCpf').value.trim();
+        if (!email || !tel || !nome || !cpf) {
+          alert('Preencha todos os campos da Identificação');
+          return;
+        }
+        if (!cpfValido(cpf)) {
+          const inp = document.getElementById('fldCpf');
+          inp.style.borderColor = '#ef4444';
+          inp.focus();
+          alert('CPF inválido. Confira os números digitados.');
+          return;
+        }
+        document.getElementById('fldCpf').style.borderColor = '';
+      }
+      // Avançar pra etapa 3: precisa ter Entrega válida (CEP + endereço + número)
+      if (n >= 3) {
+        const cep = document.getElementById('fldCep').value.replace(/\D/g,'');
+        const end = document.getElementById('fldEnd').value.trim();
+        const num = document.getElementById('fldNum').value.trim();
+        const cid = document.getElementById('fldCidade').value.trim();
+        const uf  = document.getElementById('fldUf').value.trim();
+        if (cep.length !== 8 || !end || !num || !cid || !uf) {
+          alert('Preencha o endereço completo (CEP, rua, número, cidade e estado).');
+          return;
+        }
+      }
+      document.querySelectorAll('.step-pane').forEach(p => p.classList.remove('active'));
+      document.getElementById('step-' + n).classList.add('active');
+      document.querySelectorAll('.step').forEach(s => {
+        s.classList.remove('active','done');
+        const step = parseInt(s.dataset.step);
+        if (step === n) s.classList.add('active');
+        else if (step < n) s.classList.add('done');
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Frete selector
+    document.querySelectorAll('.frete-option').forEach(el => {
+      el.addEventListener('click', () => {
+        document.querySelectorAll('.frete-option').forEach(x => x.classList.remove('active'));
+        el.classList.add('active');
+        el.querySelector('input').checked = true;
+        freteValor = parseFloat(el.dataset.valor);
+        freteLabel = el.dataset.label;
+        const lab = document.getElementById('freteSelected');
+        if (lab) lab.textContent = 'Frete selecionado: ' + freteLabel + ' (R$ ' + brl(freteValor) + ')';
+        calcular();
+      });
+    });
+
+    // Pagamento selector
+    document.querySelectorAll('.pg-option').forEach(el => {
+      el.addEventListener('click', () => {
+        document.querySelectorAll('.pg-option').forEach(x => x.classList.remove('active'));
+        el.classList.add('active');
+        el.querySelector('input').checked = true;
+        pgMetodo = el.dataset.method;
+        calcular();
+      });
+    });
+
+    // Máscaras
+    document.getElementById('fldCpf').addEventListener('input', e => {
+      let v = e.target.value.replace(/\D/g,'').slice(0,14);
+      if (v.length <= 11) v = v.replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})$/,'$1-$2');
+      else v = v.replace(/(\d{2})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1/$2').replace(/(\d{4})(\d{1,2})$/,'$1-$2');
+      e.target.value = v;
+      // Feedback visual em tempo real assim que tiver 11 digitos
+      const raw = v.replace(/\D/g,'');
+      if (raw.length === 11) {
+        e.target.style.borderColor = cpfValido(v) ? '#10b981' : '#ef4444';
+      } else {
+        e.target.style.borderColor = '';
+      }
+    });
+    document.getElementById('fldCpf').addEventListener('blur', e => {
+      const raw = e.target.value.replace(/\D/g,'');
+      if (raw.length === 11 && !cpfValido(e.target.value)) {
+        e.target.style.borderColor = '#ef4444';
+      }
+    });
+    document.getElementById('fldTel').addEventListener('input', e => {
+      let v = e.target.value.replace(/\D/g,'').slice(0,11);
+      v = v.replace(/^(\d{2})(\d)/,'($1) $2').replace(/(\d{5})(\d)/,'$1-$2');
+      e.target.value = v;
+    });
+    document.getElementById('fldCep').addEventListener('input', e => {
+      let v = e.target.value.replace(/\D/g,'').slice(0,8);
+      v = v.replace(/^(\d{5})(\d)/,'$1-$2');
+      e.target.value = v;
+      // Auto-preenche endereço quando CEP estiver completo (8 dígitos)
+      const raw = v.replace(/\D/g,'');
+      if (raw.length === 8) buscarCep(raw);
+    });
+    document.getElementById('fldCep').addEventListener('blur', e => {
+      const raw = e.target.value.replace(/\D/g,'');
+      if (raw.length === 8) buscarCep(raw);
+    });
+
+    // Busca CEP via ViaCEP (com fallback BrasilAPI)
+    let _cepCache = {};
+    let _cepLoading = false;
+    async function buscarCep(cep) {
+      if (_cepLoading) return;
+      if (_cepCache[cep]) { preencherEnd(_cepCache[cep]); return; }
+      _cepLoading = true;
+      const cepInput = document.getElementById('fldCep');
+      const origBorder = cepInput.style.borderColor;
+      cepInput.style.borderColor = '#fbbf24';
+      try {
+        // Tenta ViaCEP primeiro
+        let data = null;
+        try {
+          const r = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+          if (r.ok) {
+            const d = await r.json();
+            if (!d.erro) {
+              data = {
+                logradouro: d.logradouro || '',
+                bairro: d.bairro || '',
+                localidade: d.localidade || '',
+                uf: d.uf || ''
+              };
+            }
+          }
+        } catch (err) {}
+        // Fallback BrasilAPI
+        if (!data) {
+          try {
+            const r = await fetch(`https://brasilapi.com.br/api/cep/v1/${cep}`);
+            if (r.ok) {
+              const d = await r.json();
+              data = {
+                logradouro: d.street || '',
+                bairro: d.neighborhood || '',
+                localidade: d.city || '',
+                uf: d.state || ''
+              };
+            }
+          } catch (err) {}
+        }
+        if (data) {
+          _cepCache[cep] = data;
+          preencherEnd(data);
+          cepInput.style.borderColor = '#10b981';
+          setTimeout(() => { cepInput.style.borderColor = origBorder; }, 1500);
+        } else {
+          cepInput.style.borderColor = '#ef4444';
+          setTimeout(() => { cepInput.style.borderColor = origBorder; }, 2000);
+        }
+      } finally {
+        _cepLoading = false;
+      }
+    }
+    function preencherEnd(d) {
+      const set = (id, v) => {
+        const el = document.getElementById(id);
+        if (!el || !v) return;
+        // Só sobrescreve se vazio (não sobrescreve o que o cliente já digitou)
+        if (!el.value.trim()) {
+          el.value = v;
+          el.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+      };
+      set('fldEnd', d.logradouro);
+      set('fldBairro', d.bairro);
+      set('fldCidade', d.localidade);
+      set('fldUf', d.uf);
+      // Foca no número (próximo campo que o cliente precisa preencher)
+      const num = document.getElementById('fldNum');
+      if (num && !num.value) num.focus();
+    }
+
+    // Timer cupom (5h)
+    (function(){
+      let total = 5*60*60;
+      const el = document.getElementById('timerCupom');
+      (function tick(){
+        if (total <= 0) return;
+        const h = Math.floor(total/3600).toString().padStart(2,'0');
+        const m = Math.floor((total%3600)/60).toString().padStart(2,'0');
+        const s = (total%60).toString().padStart(2,'0');
+        el.textContent = h+':'+m+':'+s;
+        total--;
+        setTimeout(tick, 1000);
+      })();
+    })();
+
+    // CONFIRMAR PEDIDO
+    async function confirmarPedido(btn) {
+      const c = getCarrinho();
+      if (!c.length) { alert('Carrinho vazio'); return; }
+
+      // ===== VALIDACAO IDENTIFICACAO =====
+      const email = document.getElementById('fldEmail').value.trim();
+      const tel   = document.getElementById('fldTel').value.trim();
+      const nome  = document.getElementById('fldNome').value.trim();
+      const cpfField = document.getElementById('fldCpf');
+      if (!email || !tel || !nome || !cpfField.value.trim()) {
+        irPara(1);
+        alert('Preencha todos os campos da Identificação');
+        return;
+      }
+      if (!cpfValido(cpfField.value)) {
+        cpfField.style.borderColor = '#ef4444';
+        irPara(1);
+        setTimeout(() => cpfField.focus(), 300);
+        alert('CPF inválido. Confira os números digitados antes de finalizar o pedido.');
+        return;
+      }
+
+      // ===== VALIDACAO ENDERECO =====
+      const cep = document.getElementById('fldCep').value.trim();
+      const end = document.getElementById('fldEnd').value.trim();
+      const numEnd = document.getElementById('fldNum').value.trim();
+      if (!cep || !end || !numEnd) {
+        alert('Preencha CEP, Endereço e Número antes de finalizar.');
+        return;
+      }
+
+      const snap = {
+        itens: c,
+        cliente: {
+          nome: document.getElementById('fldNome').value.trim(),
+          cpf: document.getElementById('fldCpf').value.trim(),
+          telefone: document.getElementById('fldTel').value.trim(),
+          email: document.getElementById('fldEmail').value.trim(),
+          cep: document.getElementById('fldCep').value.trim(),
+          numero: document.getElementById('fldNum').value.trim(),
+          endereco: document.getElementById('fldEnd').value.trim(),
+          bairro: document.getElementById('fldBairro').value.trim(),
+          cidade: document.getElementById('fldCidade').value.trim(),
+          uf: document.getElementById('fldUf').value.trim().toUpperCase(),
+          complemento: document.getElementById('fldCompl').value.trim()
+        },
+        frete: { valor: freteValor, label: freteLabel },
+        metodo: pgMetodo,
+        confirmadoEm: new Date().toISOString()
+      };
+      const subtotal = c.reduce((s,it)=>s + num(it.preco) * Math.max(1,Number(it.quantidade||1)),0);
+      const descontoPix = pgMetodo === 'pix' ? subtotal * (PIX_DESCONTO_PCT/100) : 0;
+      snap.subtotal = subtotal;
+      snap.desconto = descontoPix;
+      snap.total = Math.max(0, subtotal + freteValor - descontoPix);
+      sessionStorage.setItem('pedidoSnapshot', JSON.stringify(snap));
+
+      if (window.ttq) {
+        try {
+          // ===== ADVANCED MATCHING — envia email/telefone do cliente (TikTok faz o hash) =====
+          // Melhora muito o tracking, especialmente em iOS
+          window.ttq.identify({
+            email: (snap.cliente.email || '').trim().toLowerCase(),
+            phone_number: '+55' + (snap.cliente.telefone || '').replace(/\D/g,''),
+            external_id: (snap.cliente.cpf || '').replace(/\D/g,''),
+          });
+          const contents = c.map(it=>({content_id:String(it.variacaoId||it.produtoId),content_name:it.titulo,content_type:'product',price:num(it.preco),quantity:Math.max(1,Number(it.quantidade||1))}));
+          window.ttq.track('AddPaymentInfo', { contents, value: snap.total, currency: 'BRL' });
+        } catch(e){}
+      }
+
+      btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Gerando PIX...';
+
+      // ===== TIKTOK Events API — gera event_id único pra DEDUP com Pixel JS =====
+      // Mesmo event_id é usado: (a) aqui pra ttq.track no front; (b) no PHP pra Events API server-side
+      const tt_event_id = (crypto.randomUUID ? crypto.randomUUID() : (Date.now().toString(36) + Math.random().toString(36).substring(2,10)));
+      sessionStorage.setItem('tt_event_id', tt_event_id);
+      // Captura ttclid (TikTok click ID) e _ttp (cookie de attribution) — funciona mesmo com redirect de parceiro
+      const _urlParams = new URLSearchParams(location.search);
+      const _ttclid = _urlParams.get('ttclid') || sessionStorage.getItem('ttclid') || localStorage.getItem('ttclid') || '';
+      if (_ttclid) { sessionStorage.setItem('ttclid', _ttclid); localStorage.setItem('ttclid', _ttclid); }
+      const _ttp = (document.cookie.match(/(?:^|;\s*)_ttp=([^;]+)/) || [])[1] || '';
+
+      const payload = {
+        valor: Math.round(snap.total * 100),
+        description: c.map(i=>i.titulo+' x'+(i.quantidade||1)).join(', ').substring(0,200),
+        nome: snap.cliente.nome, email: snap.cliente.email,
+        cpf: snap.cliente.cpf.replace(/\D/g,''),
+        telefone: snap.cliente.telefone.replace(/\D/g,''),
+        meta: { address: {
+          cep: snap.cliente.cep.replace(/\D/g,''),
+          rua: snap.cliente.endereco, numero: snap.cliente.numero,
+          bairro: snap.cliente.bairro, cidade: snap.cliente.cidade, estado: snap.cliente.uf
+        }},
+        // TikTok dedup
+        tt_event_id: tt_event_id,
+        ttclid: _ttclid,
+        ttp: _ttp,
+        page_url: location.href,
+      };
+      try {
+        const r = await fetch('checkout/pagamento-router.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await r.json();
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-shield-halved mr-2"></i> CONFIRMAR PEDIDO';
+        if (!data.success) { alert('Erro: ' + (data.message||'tente novamente')); return; }
+        sessionStorage.setItem('lastTransactionId', data.transactionId || data.token || '');
+        // event_id pode vir do servidor (caso o front nao tenha gerado) — prioriza o do servidor
+        const finalEventId = data.tt_event_id || tt_event_id;
+        sessionStorage.setItem('tt_event_id', finalEventId);
+        sessionStorage.setItem('pixData', JSON.stringify({
+          pixCode: data.pixCode || data.pixCopiaECola || '',
+          qrCodeUrl: data.qrCodeUrl || '',
+          valor: data.valor || Math.round(snap.total*100),
+          transactionId: data.transactionId || data.token || '',
+          tt_event_id: finalEventId
+        }));
+        window.location.href = 'pix.html';
+      } catch(e) {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-shield-halved mr-2"></i> CONFIRMAR PEDIDO';
+        alert('Erro ao conectar: ' + e.message);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderItens();
+      calcular();
+    });
+  </script>
+</body>
+</html>

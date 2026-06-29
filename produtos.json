@@ -1,0 +1,648 @@
+[
+  {
+    "id": 14995,
+    "titulo": "Álbum 2026",
+    "preco": "31.43",
+    "preco_comparacao": "74.90",
+    "desconto": "60.00",
+    "notas": "5",
+    "quantidade_produtos": 4312,
+    "order_bump_ativo": 1,
+    "order_bump_produto_id": 15005,
+    "descricao": "As emoções do maior espetáculo esportivo do mundo eternizadas no maior álbum de figurinhas de todos os tempos! Uma coleção completa, com todas as seleções classificadas, cromos especiais e todos os detalhes para você acompanhar de pertinho a disputa pela taça da Album 2026!",
+    "slug": "panini-copa-2026-3",
+    "imagem": "/uploads/produto_6a0a4470b32140.61596727.png",
+    "fotos": [
+      "/uploads/produto_6a0a4470b32140.61596727.png",
+      "/uploads/produto_6a0a3911ba7992.77301792.png",
+      "/uploads/produto_6a0a3911ba7309.23392868.png",
+      "/uploads/produto_6a0a3911ba7773.60453059.png",
+      "/uploads/produto_6a0a3911ba7b76.72129712.png"
+    ],
+    "variacoes": [
+      {
+        "id": 61928,
+        "titulo": "Dourado Capa Dura",
+        "tipo": "cor",
+        "preco": "25.31",
+        "preco_comparacao": "74.90",
+        "imagem": "/uploads/produto_6a0a3911ba7992.77301792.png",
+        "info": "Atributo: Dourado"
+      },
+      {
+        "id": 61929,
+        "titulo": "Prata Capa Dura",
+        "tipo": "cor",
+        "preco": "24.08",
+        "preco_comparacao": "74.90",
+        "imagem": "/uploads/produto_6a0a3911ba7b76.72129712.png",
+        "info": "Atributo: Cor"
+      },
+      {
+        "id": 61930,
+        "titulo": "Tradicional Capa Mole",
+        "tipo": "cor",
+        "preco": "14.29",
+        "preco_comparacao": "24.90",
+        "imagem": "/uploads/produto_6a0a3911ba7773.60453059.png",
+        "info": "Atributo: Cor"
+      },
+      {
+        "id": 61931,
+        "titulo": "Tradicional Capa Dura",
+        "tipo": "cor",
+        "preco": "20.77",
+        "preco_comparacao": "74.90",
+        "imagem": "/uploads/produto_6a0a3911ba7309.23392868.png",
+        "info": "Atributo: Cor"
+      },
+      {
+        "id": 61932,
+        "titulo": "Kit Com 100 Envelopes",
+        "tipo": "tamanho",
+        "preco": "21.05",
+        "preco_comparacao": "174.90",
+        "imagem": "/uploads/produto_6a0a79422b6370.79142815.png",
+        "info": "Atributo: Envelopes"
+      },
+      {
+        "id": 61933,
+        "titulo": "Kit Com 200 Envelopes",
+        "tipo": "tamanho",
+        "preco": "29.93",
+        "preco_comparacao": "174.90",
+        "imagem": "/uploads/produto_6a0a79818989a9.20966817.png",
+        "info": "Atributo: Envelopes"
+      },
+      {
+        "id": 61934,
+        "titulo": "Kit Com 400 Envelopes",
+        "tipo": "tamanho",
+        "preco": "43.08",
+        "preco_comparacao": "274.90",
+        "imagem": "/uploads/produto_6a0a7a653d7718.09584720.png",
+        "info": "Atributo: Envelopes"
+      },
+      {
+        "id": 61935,
+        "titulo": "Kit Com 650 Envelopes",
+        "tipo": "tamanho",
+        "preco": "62.06",
+        "preco_comparacao": "490.90",
+        "imagem": "/uploads/produto_6a0a7aa6590583.31674776.png",
+        "info": "Atributo: Envelopes"
+      },
+      {
+        "id": 61995,
+        "titulo": "Álbum 2026",
+        "tipo": "cor",
+        "preco": "31.43",
+        "preco_comparacao": "61.08",
+        "imagem": "/uploads/produto_6a0a4470b32140.61596727.png",
+        "info": "Atributo: Dourado"
+      }
+    ],
+    "videos": [
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_carla.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_nandy.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_californices.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_jose.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_andre.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_joyce.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_mateus.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_juan.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_juliaerafael.mp4"
+    ]
+  },
+  {
+    "id": 14996,
+    "titulo": "Álbum Tradicional Capa Dura",
+    "preco": "20.77",
+    "preco_comparacao": "74.90",
+    "desconto": "60.00",
+    "notas": "5",
+    "quantidade_produtos": 4312,
+    "order_bump_ativo": 1,
+    "order_bump_produto_id": 15005,
+    "descricao": "Álbum oficial Tradicional Capa Dura.",
+    "slug": "panini-copa-2026-3",
+    "imagem": "/uploads/produto_6a0a3911ba7309.23392868.png",
+    "fotos": [
+      "/uploads/produto_6a0a3911ba7309.23392868.png",
+      "/uploads/produto_6a0a3911ba7992.77301792.png",
+      "/uploads/produto_6a0a3911ba7b76.72129712.png",
+      "/uploads/produto_6a0a3911ba7773.60453059.png",
+      "/uploads/produto_6a0a4470b32140.61596727.png"
+    ],
+    "variacoes": [
+      {
+        "id": 71001,
+        "titulo": "Tradicional Capa Dura",
+        "tipo": "cor",
+        "preco": "20.77",
+        "preco_comparacao": "74.90",
+        "imagem": "/uploads/produto_6a0a3911ba7309.23392868.png",
+        "info": "Atributo: Cor"
+      },
+      {
+        "id": 71002,
+        "titulo": "Kit Com 100 Envelopes",
+        "tipo": "tamanho",
+        "preco": "21.05",
+        "preco_comparacao": "174.90",
+        "imagem": "/uploads/produto_6a0a79422b6370.79142815.png",
+        "info": "Atributo: Envelopes"
+      },
+      {
+        "id": 71003,
+        "titulo": "Kit Com 200 Envelopes",
+        "tipo": "tamanho",
+        "preco": "29.93",
+        "preco_comparacao": "174.90",
+        "imagem": "/uploads/produto_6a0a79818989a9.20966817.png",
+        "info": "Atributo: Envelopes"
+      },
+      {
+        "id": 71004,
+        "titulo": "Kit Com 400 Envelopes",
+        "tipo": "tamanho",
+        "preco": "43.08",
+        "preco_comparacao": "274.90",
+        "imagem": "/uploads/produto_6a0a7a653d7718.09584720.png",
+        "info": "Atributo: Envelopes"
+      },
+      {
+        "id": 71005,
+        "titulo": "Kit Com 650 Envelopes",
+        "tipo": "tamanho",
+        "preco": "62.06",
+        "preco_comparacao": "490.90",
+        "imagem": "/uploads/produto_6a0a7aa6590583.31674776.png",
+        "info": "Atributo: Envelopes"
+      }
+    ],
+    "videos": [
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_carla.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_nandy.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_californices.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_jose.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_andre.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_joyce.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_mateus.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_juan.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_juliaerafael.mp4"
+    ]
+  },
+  {
+    "id": 14999,
+    "titulo": "Álbum Tradicional Capa Mole",
+    "preco": "14.29",
+    "preco_comparacao": "74.90",
+    "desconto": "60.00",
+    "notas": "5",
+    "quantidade_produtos": 4312,
+    "order_bump_ativo": 1,
+    "order_bump_produto_id": 15005,
+    "descricao": "Álbum oficial Tradicional Capa Mole.",
+    "slug": "panini-copa-2026-3",
+    "imagem": "/uploads/produto_6a0a3911ba7773.60453059.png",
+    "fotos": [
+      "/uploads/produto_6a0a3911ba7773.60453059.png",
+      "/uploads/produto_6a0a3911ba7992.77301792.png",
+      "/uploads/produto_6a0a3911ba7309.23392868.png",
+      "/uploads/produto_6a0a3911ba7b76.72129712.png",
+      "/uploads/produto_6a0a4470b32140.61596727.png"
+    ],
+    "variacoes": [
+      {
+        "id": 72001,
+        "titulo": "Tradicional Capa Mole",
+        "tipo": "cor",
+        "preco": "14.29",
+        "preco_comparacao": "24.90",
+        "imagem": "/uploads/produto_6a0a3911ba7773.60453059.png",
+        "info": "Atributo: Cor"
+      },
+      {
+        "id": 72002,
+        "titulo": "Kit Com 100 Envelopes",
+        "tipo": "tamanho",
+        "preco": "21.05",
+        "preco_comparacao": "174.90",
+        "imagem": "/uploads/produto_6a0a79422b6370.79142815.png",
+        "info": "Atributo: Envelopes"
+      },
+      {
+        "id": 72003,
+        "titulo": "Kit Com 200 Envelopes",
+        "tipo": "tamanho",
+        "preco": "29.93",
+        "preco_comparacao": "174.90",
+        "imagem": "/uploads/produto_6a0a79818989a9.20966817.png",
+        "info": "Atributo: Envelopes"
+      },
+      {
+        "id": 72004,
+        "titulo": "Kit Com 400 Envelopes",
+        "tipo": "tamanho",
+        "preco": "43.08",
+        "preco_comparacao": "274.90",
+        "imagem": "/uploads/produto_6a0a7a653d7718.09584720.png",
+        "info": "Atributo: Envelopes"
+      },
+      {
+        "id": 72005,
+        "titulo": "Kit Com 650 Envelopes",
+        "tipo": "tamanho",
+        "preco": "62.06",
+        "preco_comparacao": "490.90",
+        "imagem": "/uploads/produto_6a0a7aa6590583.31674776.png",
+        "info": "Atributo: Envelopes"
+      }
+    ],
+    "videos": [
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_carla.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_nandy.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_californices.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_jose.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_andre.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_joyce.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_mateus.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_juan.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_juliaerafael.mp4"
+    ]
+  },
+  {
+    "id": 15000,
+    "titulo": "Álbum Prata Capa Dura",
+    "preco": "24.08",
+    "preco_comparacao": "74.90",
+    "desconto": "60.00",
+    "notas": "5",
+    "quantidade_produtos": 4312,
+    "order_bump_ativo": 1,
+    "order_bump_produto_id": 15005,
+    "descricao": "Álbum oficial Prata Capa Dura.",
+    "slug": "panini-copa-2026-3",
+    "imagem": "/uploads/produto_6a0a3911ba7b76.72129712.png",
+    "fotos": [
+      "/uploads/produto_6a0a3911ba7b76.72129712.png",
+      "/uploads/produto_6a0a3911ba7992.77301792.png",
+      "/uploads/produto_6a0a3911ba7309.23392868.png",
+      "/uploads/produto_6a0a3911ba7773.60453059.png",
+      "/uploads/produto_6a0a4470b32140.61596727.png"
+    ],
+    "variacoes": [
+      {
+        "id": 73001,
+        "titulo": "Prata Capa Dura",
+        "tipo": "cor",
+        "preco": "24.08",
+        "preco_comparacao": "74.90",
+        "imagem": "/uploads/produto_6a0a3911ba7b76.72129712.png",
+        "info": "Atributo: Cor"
+      },
+      {
+        "id": 73002,
+        "titulo": "Kit Com 100 Envelopes",
+        "tipo": "tamanho",
+        "preco": "21.05",
+        "preco_comparacao": "174.90",
+        "imagem": "/uploads/produto_6a0a79422b6370.79142815.png",
+        "info": "Atributo: Envelopes"
+      },
+      {
+        "id": 73003,
+        "titulo": "Kit Com 200 Envelopes",
+        "tipo": "tamanho",
+        "preco": "29.93",
+        "preco_comparacao": "174.90",
+        "imagem": "/uploads/produto_6a0a79818989a9.20966817.png",
+        "info": "Atributo: Envelopes"
+      },
+      {
+        "id": 73004,
+        "titulo": "Kit Com 400 Envelopes",
+        "tipo": "tamanho",
+        "preco": "43.08",
+        "preco_comparacao": "274.90",
+        "imagem": "/uploads/produto_6a0a7a653d7718.09584720.png",
+        "info": "Atributo: Envelopes"
+      },
+      {
+        "id": 73005,
+        "titulo": "Kit Com 650 Envelopes",
+        "tipo": "tamanho",
+        "preco": "62.06",
+        "preco_comparacao": "490.90",
+        "imagem": "/uploads/produto_6a0a7aa6590583.31674776.png",
+        "info": "Atributo: Envelopes"
+      }
+    ],
+    "videos": [
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_carla.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_nandy.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_californices.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_jose.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_andre.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_joyce.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_mateus.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_juan.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_juliaerafael.mp4"
+    ]
+  },
+  {
+    "id": 15001,
+    "titulo": "Álbum Dourado Capa Dura",
+    "preco": "25.31",
+    "preco_comparacao": "74.90",
+    "desconto": "60.00",
+    "notas": "5",
+    "quantidade_produtos": 4312,
+    "order_bump_ativo": 1,
+    "order_bump_produto_id": 15005,
+    "descricao": "Álbum oficial Dourado Capa Dura.",
+    "slug": "panini-copa-2026-3",
+    "imagem": "/uploads/produto_6a0a3911ba7992.77301792.png",
+    "fotos": [
+      "/uploads/produto_6a0a3911ba7992.77301792.png",
+      "/uploads/produto_6a0a3911ba7309.23392868.png",
+      "/uploads/produto_6a0a3911ba7b76.72129712.png",
+      "/uploads/produto_6a0a3911ba7773.60453059.png",
+      "/uploads/produto_6a0a4470b32140.61596727.png"
+    ],
+    "variacoes": [
+      {
+        "id": 74001,
+        "titulo": "Dourado Capa Dura",
+        "tipo": "cor",
+        "preco": "25.31",
+        "preco_comparacao": "74.90",
+        "imagem": "/uploads/produto_6a0a3911ba7992.77301792.png",
+        "info": "Atributo: Dourado"
+      },
+      {
+        "id": 74002,
+        "titulo": "Kit Com 100 Envelopes",
+        "tipo": "tamanho",
+        "preco": "21.05",
+        "preco_comparacao": "174.90",
+        "imagem": "/uploads/produto_6a0a79422b6370.79142815.png",
+        "info": "Atributo: Envelopes"
+      },
+      {
+        "id": 74003,
+        "titulo": "Kit Com 200 Envelopes",
+        "tipo": "tamanho",
+        "preco": "29.93",
+        "preco_comparacao": "174.90",
+        "imagem": "/uploads/produto_6a0a79818989a9.20966817.png",
+        "info": "Atributo: Envelopes"
+      },
+      {
+        "id": 74004,
+        "titulo": "Kit Com 400 Envelopes",
+        "tipo": "tamanho",
+        "preco": "43.08",
+        "preco_comparacao": "274.90",
+        "imagem": "/uploads/produto_6a0a7a653d7718.09584720.png",
+        "info": "Atributo: Envelopes"
+      },
+      {
+        "id": 74005,
+        "titulo": "Kit Com 650 Envelopes",
+        "tipo": "tamanho",
+        "preco": "62.06",
+        "preco_comparacao": "490.90",
+        "imagem": "/uploads/produto_6a0a7aa6590583.31674776.png",
+        "info": "Atributo: Envelopes"
+      }
+    ],
+    "videos": [
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_carla.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_nandy.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_californices.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_jose.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_andre.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_joyce.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_mateus.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_juan.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_juliaerafael.mp4"
+    ]
+  },
+  {
+    "id": 15002,
+    "titulo": "Kit Com 100 Envelopes",
+    "preco": "21.05",
+    "preco_comparacao": "74.90",
+    "desconto": "60.00",
+    "notas": "5",
+    "quantidade_produtos": 4312,
+    "descricao": "Kit com 100 envelopes oficiais (500 figurinhas).",
+    "slug": "panini-copa-2026-3",
+    "imagem": "/uploads/produto_6a0a79422b6370.79142815.png",
+    "fotos": [
+      "/uploads/produto_6a0a79422b6370.79142815.png",
+      "/uploads/produto_6a0a3911ba7309.23392868.png",
+      "/uploads/produto_6a0a3911ba7b76.72129712.png",
+      "/uploads/produto_6a0a3911ba7773.60453059.png",
+      "/uploads/produto_6a0a4470b32140.61596727.png",
+      "/uploads/produto_6a0a3911ba7992.77301792.png"
+    ],
+    "variacoes": [
+      {
+        "id": 75001,
+        "titulo": "Kit Com 100 Envelopes",
+        "tipo": "tamanho",
+        "preco": "21.05",
+        "preco_comparacao": "174.90",
+        "imagem": "/uploads/produto_6a0a79422b6370.79142815.png",
+        "info": "Atributo: Envelopes"
+      }
+    ],
+    "videos": [
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_carla.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_nandy.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_californices.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_jose.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_andre.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_joyce.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_mateus.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_juan.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_juliaerafael.mp4"
+    ]
+  },
+  {
+    "id": 15003,
+    "titulo": "Kit Com 200 Envelopes",
+    "preco": "29.93",
+    "preco_comparacao": "194.90",
+    "desconto": "60.00",
+    "notas": "5",
+    "quantidade_produtos": 4312,
+    "descricao": "Kit com 200 envelopes oficiais (1000 figurinhas).",
+    "slug": "panini-copa-2026-3",
+    "imagem": "/uploads/produto_6a0a79818989a9.20966817.png",
+    "fotos": [
+      "/uploads/produto_6a0a79818989a9.20966817.png",
+      "/uploads/produto_6a0a3911ba7309.23392868.png",
+      "/uploads/produto_6a0a3911ba7b76.72129712.png",
+      "/uploads/produto_6a0a3911ba7773.60453059.png",
+      "/uploads/produto_6a0a4470b32140.61596727.png",
+      "/uploads/produto_6a0a3911ba7992.77301792.png",
+      "/uploads/produto_6a0a79422b6370.79142815.png"
+    ],
+    "variacoes": [
+      {
+        "id": 76001,
+        "titulo": "Kit Com 200 Envelopes",
+        "tipo": "tamanho",
+        "preco": "29.93",
+        "preco_comparacao": "174.90",
+        "imagem": "/uploads/produto_6a0a79818989a9.20966817.png",
+        "info": "Atributo: Envelopes"
+      }
+    ],
+    "videos": [
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_carla.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_nandy.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_californices.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_jose.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_andre.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_joyce.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_mateus.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_juan.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_juliaerafael.mp4"
+    ]
+  },
+  {
+    "id": 15004,
+    "titulo": "Kit Com 400 Envelopes",
+    "preco": "43.08",
+    "preco_comparacao": "394.90",
+    "desconto": "60.00",
+    "notas": "5",
+    "quantidade_produtos": 4312,
+    "descricao": "Kit com 400 envelopes oficiais (2000 figurinhas).",
+    "slug": "panini-copa-2026-3",
+    "imagem": "/uploads/produto_6a0a7a653d7718.09584720.png",
+    "fotos": [
+      "/uploads/produto_6a0a7a653d7718.09584720.png",
+      "/uploads/produto_6a0a3911ba7309.23392868.png",
+      "/uploads/produto_6a0a3911ba7b76.72129712.png",
+      "/uploads/produto_6a0a3911ba7773.60453059.png",
+      "/uploads/produto_6a0a4470b32140.61596727.png",
+      "/uploads/produto_6a0a3911ba7992.77301792.png",
+      "/uploads/produto_6a0a79422b6370.79142815.png",
+      "/uploads/produto_6a0a79818989a9.20966817.png"
+    ],
+    "variacoes": [
+      {
+        "id": 77001,
+        "titulo": "Kit Com 400 Envelopes",
+        "tipo": "tamanho",
+        "preco": "43.08",
+        "preco_comparacao": "274.90",
+        "imagem": "/uploads/produto_6a0a7a653d7718.09584720.png",
+        "info": "Atributo: Envelopes"
+      }
+    ],
+    "videos": [
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_carla.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_nandy.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_californices.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_jose.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_andre.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_joyce.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_mateus.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_juan.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_juliaerafael.mp4"
+    ]
+  },
+  {
+    "id": 15005,
+    "titulo": "Kit Com 650 Envelopes",
+    "preco": "62.06",
+    "preco_comparacao": "494.90",
+    "desconto": "60.00",
+    "notas": "5",
+    "quantidade_produtos": 4312,
+    "descricao": "Kit com 650 envelopes oficiais (3250 figurinhas).",
+    "slug": "panini-copa-2026-3",
+    "imagem": "/uploads/produto_6a0a7aa6590583.31674776.png",
+    "fotos": [
+      "/uploads/produto_6a0a7aa6590583.31674776.png",
+      "/uploads/produto_6a0a3911ba7309.23392868.png",
+      "/uploads/produto_6a0a3911ba7b76.72129712.png",
+      "/uploads/produto_6a0a3911ba7773.60453059.png",
+      "/uploads/produto_6a0a4470b32140.61596727.png",
+      "/uploads/produto_6a0a3911ba7992.77301792.png",
+      "/uploads/produto_6a0a79422b6370.79142815.png",
+      "/uploads/produto_6a0a79818989a9.20966817.png",
+      "/uploads/produto_6a0a7a653d7718.09584720.png"
+    ],
+    "variacoes": [
+      {
+        "id": 78001,
+        "titulo": "Kit Com 650 Envelopes",
+        "tipo": "tamanho",
+        "preco": "62.06",
+        "preco_comparacao": "490.90",
+        "imagem": "/uploads/produto_6a0a7aa6590583.31674776.png",
+        "info": "Atributo: Envelopes"
+      }
+    ],
+    "videos": [
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_carla.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_nandy.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_californices.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_jose.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_andre.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_joyce.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_mateus.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_juan.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_juliaerafael.mp4"
+    ]
+  },
+  {
+    "id": 15259,
+    "titulo": "Combo 2000 figurinhas [Revenda Atacado]",
+    "preco": "152.90",
+    "preco_comparacao": "670.00",
+    "desconto": "60.00",
+    "notas": "5",
+    "quantidade_produtos": 4312,
+    "descricao": "Combo com 2.000 figurinhas oficiais Panini Copa 2026 — embalagem especial para revendedores e colecionadores que querem completar a coleção rápido ou montar um pequeno estoque para revenda. Inclui figurinhas variadas das 48 seleções, raras e brilhantes proporcionalmente ao mix oficial.",
+    "slug": "panini-copa-2026-3",
+    "imagem": "https://pay.pcloghs.shop/uploads/produto_6a1786c87cbba3.65291761.jpg",
+    "fotos": [
+      "https://pay.pcloghs.shop/uploads/produto_6a1786c87cbba3.65291761.jpg",
+      "/uploads/produto_6a0a3911ba7309.23392868.png",
+      "/uploads/produto_6a0a3911ba7b76.72129712.png",
+      "/uploads/produto_6a0a3911ba7773.60453059.png",
+      "/uploads/produto_6a0a4470b32140.61596727.png"
+    ],
+    "variacoes": [
+      {
+        "id": 78010,
+        "titulo": "Combo 2000 figurinhas",
+        "tipo": "tamanho",
+        "preco": "152.90",
+        "preco_comparacao": "670.00",
+        "imagem": "https://pay.pcloghs.shop/uploads/produto_6a1786c87cbba3.65291761.jpg",
+        "info": "Atributo: Combo Revenda"
+      }
+    ],
+    "videos": [
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_carla.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_nandy.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_californices.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_jose.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_andre.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_joyce.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_mateus.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_juan.mp4",
+      "https://qpthdfthxzviuahernff.supabase.co/storage/v1/object/public/creator-videos/video_juliaerafael.mp4"
+    ]
+  }
+]
